@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import brushIcon from '@/assets/icons/brush.svg';
-import { CustomizationModal } from '../customizationInner/CustomizationModal';
+import { CustomizationModal } from '../customizationInner/CustomizationModal.1';
 import { useState } from 'react';
 
 export const CustomizationLayout = () => {

@@ -1,17 +1,9 @@
 import { useWallStore } from '@/store';
-//import { StyleType, BackgroundType, StyleBlockType } from '@/types/wall';
 import { Modal } from 'antd';
 import { produce } from 'immer';
 import BackgroundSettings from './BackgroundSettings';
-import { BLOCK_SHAPE } from '@/data/constants/customization';
-//import { useState } from 'react';
-//import modernTheme from '@/assets/theme/modern.svg';
+import { CustomizationModalProps } from './CustomizationModal';
 
-interface CustomizationModalProps {
-  isModalOpen: boolean;
-  handleOk: () => void;
-  handleCancel: () => void;
-}
 export const CustomizationModal = ({
   isModalOpen,
   // handleOk,
@@ -20,7 +12,6 @@ export const CustomizationModal = ({
   const { wall, setWall } = useWallStore();
 
   // antD 예시로 넣음, handleColor로 관리하도록 변경해야 함.
-
   // 배경-컬러
   // const handleColor = (color: string) => {
   //   setWall(
@@ -30,7 +21,6 @@ export const CustomizationModal = ({
   //   );
   //   //console.log(e.target.value);
   // };
-
   // const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setWall(
   //     produce(wall, (draft) => {
@@ -40,7 +30,6 @@ export const CustomizationModal = ({
   //   console.log(e.target.value);
   // };
   // 정우님, 프로필이미지 방식
-
   // 블록-모양
   const handleBorder = (e: React.ChangeEvent<HTMLInputElement>) => {
     // setWall({
@@ -92,7 +81,6 @@ export const CustomizationModal = ({
   //   // 선택된 스타일 옵션을 여기서 활용하거나 필요한 대로 처리합니다.
   //   handleOk(); // 원래의 확인 핸들러를 호출합니다.
   // };
-
   return (
     <Modal
       centered
@@ -101,7 +89,6 @@ export const CustomizationModal = ({
       //onOk={handleApplyCustomization}
       onCancel={handleCancel}
       width="660px"
-      //height="688px"
     >
       {/* 배경 */}
       <BackgroundSettings />
@@ -192,14 +179,14 @@ export const CustomizationModal = ({
                 onChange={handleStyleColor}
               />
               {/* <ColorPicker value={color} onChange={setColor}>
-                <Button
-                  type="primary"
-                  style={btnStyle}
-                  className="w-[194px] h-[48px]"
-                >
-                  컬러 피커
-                </Button>
-              </ColorPicker> */}
+              <Button
+                type="primary"
+                style={btnStyle}
+                className="w-[194px] h-[48px]"
+              >
+                컬러 피커
+              </Button>
+            </ColorPicker> */}
             </label>
             {/* 그라데이션 */}
             <label
@@ -237,7 +224,6 @@ export const CustomizationModal = ({
               name="style"
               value="modern"
               checked={wall.style.theme === 'modern'}
-              //onChange={handleTheme}
             />
           </label>
           <label
@@ -251,7 +237,6 @@ export const CustomizationModal = ({
               name="style"
               value="modern"
               checked={wall.style.theme === 'modern'}
-              //onChange={handleTheme}
             />
           </label>
           <label
@@ -265,7 +250,6 @@ export const CustomizationModal = ({
               name="style"
               value="modern"
               checked={wall.style.theme === 'modern'}
-              //onChange={handleTheme}
             />
           </label>
           <label
@@ -279,7 +263,6 @@ export const CustomizationModal = ({
               name="style"
               value="modern"
               checked={wall.style.theme === 'modern'}
-              //onChange={handleTheme}
             />
           </label>
         </div>

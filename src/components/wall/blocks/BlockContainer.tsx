@@ -25,10 +25,10 @@ export const BlockContainer = ({
       }),
     );
   };
-  // border-[${wall?.style?.block?.style}]
   return (
     <div
-      className={`bg-white rounded-[${wall?.style?.block?.shape}] border-[${wall?.style?.block?.style}] border-solid border-lightBlack overflow-hidden relative`}
+      className={`bg-white rounded-[${wall?.style?.block?.shape}] ${wall?.style?.block?.style} border-solid border-lightBlack overflow-hidden relative`}
+      // style={{ backgroundColor: wall?.style?.background?.color }}
     >
       {blockName !== 'profileBlock' && (
         <>

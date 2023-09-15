@@ -107,7 +107,10 @@ export const WallPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray flex flex-col ">
+    <div
+      className={`min-h-screen bg-gray flex flex-col`}
+      style={{ backgroundColor: wall?.style?.background?.color }}
+    >
       {contextHolder}
       <WallHeader wallId={wallId} />
 
