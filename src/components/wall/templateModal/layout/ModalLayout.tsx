@@ -4,21 +4,29 @@ import styled from 'styled-components';
 
 import {
   BestTemplate,
-  CategoryTemplet,
+  CategoryTemplate,
   SelecteSearchTemplate,
 } from 'components/index';
+import { ModalHeader } from '@/components/common/ModalHeader';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ModalOpen = () => {
   const { Search } = Input;
   // 모달 오픈을 관리하기 위한 상태관리
+
+  const [procedure, setProcedure] = useState<
+    'recommand' | 'category' | 'search'
+  >('recommand');
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   // 처음 추천 템플릿을 보여주기 위한 상태관리
-  const [showBestTemplate, setShowBestTemplate] = useState<boolean>(true);
-  // 인풋창에 포커스시 보여주기 위한 상태관리
-  const [categoryTemplate, setCategoryTemplate] = useState<boolean>(false);
-  // 인풋창에 입력시 변경되는 상태관리
+
   const [inputText, setInputText] = useState('');
+
+  const PROCEDURE_MAPPER = {
+    recommand: <BestTemplate />,
+    category: <CategoryTemplate />,
+    search: <SelecteSearchTemplate inputText={inputText} />,
+  };
 
   // 검색 버튼 클릭시 실행되는 함수
   const onSearch = (value: string) => {
@@ -29,48 +37,37 @@ export const ModalOpen = () => {
   // 모달창을 보여주는 함수
   const showModal = () => {
     setIsModalOpen(true);
-    setShowBestTemplate(true);
-    setCategoryTemplate(false);
-    //setInputText('');
   };
 
   const handleSearchFocus = () => {
-    setShowBestTemplate(false); // Search 입력에 포커스가 클릭되면 BestTemplate 숨김
-    setCategoryTemplate(true);
+    setProcedure('category');
+    // setShowBestTemplate(false); // Search 입력에 포커스가 클릭되면 BestTemplate 숨김
+    // setCategoryTemplate(true);
 
     //  이슈: input창에 입력하고 나서 외부에 커서 클릭후 다시 input창으로 커서를 두게 되면
     // 상태변화 때문에 리스트 추천 템플릿 컴포넌트의 false 가 해제되게 됨. 따라 조건식으로
     //input창에 입력된 문자열 길이가 0 위로 존재하면 추천 템플릿이 보이지 않게끔 해결.
-    if (inputText.length > 0) {
-      setCategoryTemplate(false);
-    } else {
-      return;
-    }
   };
 
   const handleOk = () => {
     setIsModalOpen(false);
-    setShowBestTemplate(false);
-    //setInputText('');
+    setInputText('');
+    setProcedure('recommand');
   };
 
   const handleCancel = () => {
-    alert('취소');
     setIsModalOpen(false);
-    setShowBestTemplate(true);
-    setCategoryTemplate(false);
-    //setInputText('');
+    setInputText('');
+    setProcedure('recommand');
   };
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
 
     if (e.target.value.length > 0) {
-      setCategoryTemplate(false);
-      setShowBestTemplate(false);
-      console.log(e.target.value);
+      setProcedure('search');
     } else {
-      setCategoryTemplate(true);
+      setProcedure('category');
     }
   };
 
@@ -80,15 +77,23 @@ export const ModalOpen = () => {
         템플릿 생성
       </Button>
       <Modals
-        title="Basic Modal"
+        centered
+        title={
+          <ModalHeader
+            title="템플릿 선택하기"
+            handleOk={handleOk}
+            handleCloseModal={handleCancel}
+          />
+        }
+        footer={null}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        maskClosable={false}
+        closeIcon={null}
       >
-        <ModalHeader>
+        {/* <ModalHeaders>
           <p>템플릿 선택하기</p>
-        </ModalHeader>
+        </ModalHeaders> */}
         <SettingTemplet>
           <p className="settingtText">템플릿 설정하기</p>
           <SelectBox>
@@ -109,9 +114,7 @@ export const ModalOpen = () => {
                 onChange={handleChangeText}
               />
             </InputBox>
-            {showBestTemplate && <BestTemplate />}
-            {categoryTemplate && <CategoryTemplet />}
-            {inputText && <SelecteSearchTemplate inputText={inputText} />}
+            {PROCEDURE_MAPPER[procedure]}
           </SelectBox>
         </SettingTemplet>
       </Modals>
@@ -126,10 +129,6 @@ const Modals = styled(Modal)`
     display: flex;
     flex-direction: column;
     padding-bottom: 106px;
-  }
-
-  .ant-modal-title {
-    display: none;
   }
 
   .ant-btn.css-dev-only-do-not-override-12nk7v7.ant-btn-default {
@@ -147,7 +146,7 @@ const Modals = styled(Modal)`
   }
 `;
 
-const ModalHeader = styled.div`
+const ModalHeaders = styled.div`
   max-width: 600px;
   margin-top: 15px;
   padding-bottom: 15px;
@@ -161,7 +160,7 @@ const ModalHeader = styled.div`
     font-weight: 800;
   }
 `;
-const SettingTemplet = styled(ModalHeader)`
+const SettingTemplet = styled(ModalHeaders)`
   height: 600px;
   border: none;
   background-color: aliceblue;

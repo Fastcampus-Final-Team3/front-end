@@ -58,7 +58,7 @@ export const SelecteSearchTemplate: React.FC<Props> = ({ inputText }) => {
 
 const SeleteContainer = styled.div`
   width: 100%;
-  background-color: orange;
+  //background-color: orange;
   margin-top: 100px;
   position: absolute;
 
@@ -71,7 +71,7 @@ const ResultBox = styled.div`
   width: 90%;
   height: 210px;
   margin: auto;
-  background-color: #108fdd;
+  //background-color: #108fdd;
   max-height: 200px;
   overflow-y: auto;
 `;

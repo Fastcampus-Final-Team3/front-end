@@ -1,60 +1,48 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-//import ListTemplete from './CategoryListc';
-import { ListTemplete } from 'components/index'
+import { useEffect, useState } from 'react';
+import { ListTemplete } from 'components/index';
 
-type BookTypeArr = BookType[];
-
-interface BookType {
-  type: string;
-  number: number;
+export interface Category {
+  category: string;
+  text: string;
 }
 
-const bookcategory: BookTypeArr = [
-  { type: '개인', number: 1 },
-  { type: '소개', number: 2 },
-  { type: '카테고리1', number: 3 },
-  { type: '카테고리2', number: 4 },
-  { type: '카테고리3', number: 5 },
+const BookCategory: Category[] = [
+  { category: 'self', text: '개인/소개' },
+  { category: 'event', text: '이벤트/일상' },
+  { category: 'company', text: '기업/근로양식' },
+  { category: 'employment', text: '취업/이직' },
 ];
 
-export const CategoryTemplet = () => {
-  const [type, setType] = useState<string>();
+export const CategoryTemplate = () => {
+  const [categoryList, setCategoryList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('self');
 
   useEffect(() => {
-    const target = document.querySelectorAll('h1');
+    // 페이지 로딩 시 'self' 타입의 데이터를 가져옴
+    getListData('self');
+  }, []); // 빈 배열을 전달하여 한 번만 실행되도록 함
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          setType(entry.target.id);
-        }
-      },
-      { threshold: 0.3, rootMargin: `0px 0px -50% 0px` },
-    );
-    target.forEach((item) => {
-      io.observe(item);
-    });
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    getListData(category);
+    setModalContent();
+  };
 
-    return () => {
-      io.disconnect();
-    };
-  }, []);
-
-  const handleItemClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    const listItems = document.querySelectorAll('.Category-menu__text li');
-    listItems.forEach((li) => {
-      li.classList.remove('active');
-    });
-
-    event.currentTarget.parentElement?.classList.add('active');
-
-    const targetId = event.currentTarget.getAttribute('href')?.substring(1);
-    const targetElement = document.getElementById(targetId || '');
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
+  const getListData = async (category) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/${category}`,
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // 'data' 객체 안의 'list'를 사용하여 카테고리별 데이터에 접근
+        setCategoryList([...data]);
+      } else {
+        console.error('API 호출 실패:', response.status);
+      }
+    } catch (error) {
+      console.error('API 호출 에러:', error);
     }
   };
 
@@ -62,26 +50,23 @@ export const CategoryTemplet = () => {
     <CategoryLayout>
       <Categorybox>
         <ul className="Category-menu__text">
-          {bookcategory.map((item) => (
+          {BookCategory.map((item, index) => (
             <li
-              key={item.number}
-              className={item.type === type ? 'active' : ''}
+              key={item.category}
+              className={item.category === selectedCategory ? 'active' : ''}
+              onClick={() => handleCategoryClick(item.category)}
             >
-              <a href={`#${item.type}`} onClick={(e) => handleItemClick(e)}>
-                {item.type}
-              </a>
+              {item.text}
             </li>
           ))}
         </ul>
       </Categorybox>
       <TemplateList>
-        {bookcategory.map((item) => (
-          <ListTemplete key={item.number} category={item} />
-        ))}
+        <ListTemplete list={categoryList} category={selectedCategory} />
       </TemplateList>
     </CategoryLayout>
   );
-}
+};
 
 const CategoryLayout = styled.div`
   width: 100%;
@@ -89,7 +74,7 @@ const CategoryLayout = styled.div`
   height: 500px;
   margin-top: 90px;
   //padding-bottom: 10px;
-  background-color: yellow;
+  //background-color: yellow;
   border-top: 1px solid gray;
   max-height: 500px;
   overflow-y: auto;
@@ -103,9 +88,9 @@ const Categorybox = styled.div`
   box-sizing: border-box;
   //background-color: aqua;
   border-right: 1px solid gray;
+  color: black;
 
   .Category-menu__text {
-    //background-color: tan;
     width: 110px;
     margin: auto;
     padding-bottom: 10px;
@@ -121,12 +106,14 @@ const Categorybox = styled.div`
       font-weight: bold;
       font-size: 15px;
       transition: background-color 0.3s;
+      cursor: pointer;
     }
     .active {
       background-color: #15c6b7;
     }
   }
 `;
+
 const TemplateList = styled.div`
   width: 80%;
   float: right;
