@@ -26,11 +26,11 @@ type BestTemplateProps = {
 // };
 
 const fetchTemplateData = async (PERSONAL: string) => {
-  const apiUrl = `${
-    import.meta.env.VITE_SERVER_BASE_URL
-  }/api/wall/templates?category=${PERSONAL}`;
-  console.log(import.meta.env.VITE_SERVER_BASE_URL);
-  const response = await axios.get(apiUrl);
+  const response = await axios.get(
+    `${
+      import.meta.env.VITE_SERVER_BASE_URL
+    }/wall/templates?category=${PERSONAL}`,
+  );
   return response.data.data.list;
 };
 
