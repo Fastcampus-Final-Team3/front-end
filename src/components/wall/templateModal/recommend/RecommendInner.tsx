@@ -16,10 +16,21 @@ type BestTemplateProps = {
   PERSONAL: string;
 };
 
+// const fetchTemplateData = async (PERSONAL: string) => {
+//   const response = await axios.get(
+//     `${
+//       import.meta.env.VITE_SERVER_BASE_URL
+//     }/wall/templates?category=${PERSONAL}`,
+//   );
+//   return response.data.data.list;
+// };
+
 const fetchTemplateData = async (PERSONAL: string) => {
-  const response = await axios.get(
-    `/api/api/wall/templates?category=${PERSONAL}`,
-  );
+  const apiUrl = `${
+    import.meta.env.VITE_SERVER_BASE_URL
+  }/api/wall/templates?category=${PERSONAL}`;
+  console.log(import.meta.env.VITE_SERVER_BASE_URL);
+  const response = await axios.get(apiUrl);
   return response.data.data.list;
 };
 

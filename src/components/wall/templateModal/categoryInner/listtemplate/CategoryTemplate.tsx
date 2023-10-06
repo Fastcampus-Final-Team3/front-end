@@ -16,11 +16,27 @@ const BookCategory: Category[] = [
   { category: 'CAREER', text: '취업/이직' },
 ];
 
+// const fetchTemplateData = async (category: string) => {
+//   const response = await axios.get(
+//     `${
+//       import.meta.env.VITE_SERVER_BASE_URL
+//     }/wall/templates/lists?category=${category}`,
+//   );
+//   return response.data.data.list;
+// };
+
 const fetchTemplateData = async (category: string) => {
-  const response = await axios.get(
-    `/api/api/wall/templates/lists?category=${category}`,
-  );
-  return response.data.data.list;
+  try {
+    const response = await axios.get(
+      `${
+        import.meta.env.VITE_SERVER_BASE_URL
+      }/wall/templates/lists?category=${category}`,
+    );
+    return response.data.data.list;
+  } catch (error) {
+    console.error('API 호출 중 오류 발생:', error);
+    throw error; // 오류를 다시 던져서 상위 레벨에서 처리할 수 있도록 함
+  }
 };
 
 export const CategoryTemplate = () => {
