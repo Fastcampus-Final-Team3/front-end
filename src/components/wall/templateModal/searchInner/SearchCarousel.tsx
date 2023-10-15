@@ -28,11 +28,9 @@ export const SearchCarousel = () => {
     const fetchData = async (PERSONAL: string) => {
       try {
         const response = await axios.get(
-          `/api/api/wall/templates?category=${PERSONAL}`,
+          `${import.meta.env.VITE_SERVER_BASE_URL}/wall/templates?category=${PERSONAL}`,
         );
         const data = response.data.data.list;
-
-        // Set the fetched data to your state
         setTemplateData(data);
       } catch (error) {
         console.error('API 호출 에러:', error);
