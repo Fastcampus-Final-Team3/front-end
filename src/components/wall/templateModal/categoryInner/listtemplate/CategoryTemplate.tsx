@@ -16,15 +16,6 @@ const BookCategory: Category[] = [
   { category: 'CAREER', text: '취업/이직' },
 ];
 
-// const fetchTemplateData = async (category: string) => {
-//   const response = await axios.get(
-//     `${
-//       import.meta.env.VITE_SERVER_BASE_URL
-//     }/wall/templates/lists?category=${category}`,
-//   );
-//   return response.data.data.list;
-// };
-
 const fetchTemplateData = async (category: string) => {
   const response = await axios.get(
     `${

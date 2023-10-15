@@ -16,15 +16,6 @@ type BestTemplateProps = {
   PERSONAL: string;
 };
 
-// const fetchTemplateData = async (PERSONAL: string) => {
-//   const response = await axios.get(
-//     `${
-//       import.meta.env.VITE_SERVER_BASE_URL
-//     }/wall/templates?category=${PERSONAL}`,
-//   );
-//   return response.data.data.list;
-// };
-
 const fetchTemplateData = async (PERSONAL: string) => {
   const response = await axios.get(
     `${

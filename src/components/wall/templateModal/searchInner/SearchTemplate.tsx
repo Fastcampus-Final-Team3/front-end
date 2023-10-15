@@ -19,7 +19,7 @@ type Props = {
 
 const fetchSearchData = async (debouncedInputValue: string) => {
   const response = await axios.get(
-    `/api/api/wall/templates?search=${debouncedInputValue}`,
+    `${import.meta.env.VITE_SERVER_BASE_URL}/wall/templates?search=${debouncedInputValue}`,
   );
   return response.data.data.list;
 };
