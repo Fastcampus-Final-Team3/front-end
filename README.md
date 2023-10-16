@@ -59,7 +59,7 @@
   <tr>
     <td align="center"><strong>노션</strong></td>
     <td>
-      <a href="https://spangle-rhubarb-620.notion.site/Java-Jober-fa3a64b84e99402fa5341aae843c5f19?pvs=4">
+      <a href="#">
         👉 노션 바로가기
       </a>
     </td>
