@@ -1,7 +1,7 @@
 import { Button } from 'antd';
-import { Icon } from '../common';
 import documentIcon from '@/assets/icons/home/document.svg';
 import useMemberInfo from '@/hooks/useMemberInfo';
+import Icon from '../common/Icon';
 
 export default function HomeRecentDocument() {
   const { memberInfo } = useMemberInfo();

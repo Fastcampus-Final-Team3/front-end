@@ -4,7 +4,7 @@ interface IconProps {
   className?: string;
 }
 
-export const Icon = ({ src, onClick, className }: IconProps) => {
+export default function Icon({ src, onClick, className }: IconProps) {
   return (
     <img
       draggable={false}
@@ -14,4 +14,4 @@ export const Icon = ({ src, onClick, className }: IconProps) => {
       onClick={onClick}
     />
   );
-};
+}

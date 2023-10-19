@@ -3,9 +3,9 @@ import galleryIcon from '@/assets/icons/gallery.svg';
 import { produce } from 'immer';
 import { IMAGE_FILE_SIZE_LIMIT } from '@/data/constants/blocks';
 import { message } from 'antd';
-import { Icon } from '@/components/common';
 import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
+import Icon from '@/components/common/Icon';
 
 export type ImageData = {
   access_mode: string;

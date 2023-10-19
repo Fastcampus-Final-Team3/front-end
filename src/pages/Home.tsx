@@ -1,10 +1,17 @@
-import { Home, Navbar } from 'components/index';
+import HomeProfile from '@/components/home/HomeProfile';
+import HomeRecentDocument from '@/components/home/HomeRecentDocument';
+import HomeSpace from '@/components/home/HomeSpace';
+import { Navbar } from '@/components/navbar/Navbar';
 
-export const HomePage = () => {
+export default function Home() {
   return (
     <>
       <Navbar />
-      <Home />
+      <div className="px-[24px] py-[22px] break-keep">
+        <HomeProfile />
+        <HomeSpace />
+        <HomeRecentDocument />
+      </div>
     </>
   );
-};
+}

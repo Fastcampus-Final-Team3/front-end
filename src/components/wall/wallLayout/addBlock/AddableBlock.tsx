@@ -7,12 +7,12 @@ interface AddableBlockProp {
   hasSnsBlock: boolean;
 }
 
-export const AddableBlock = ({
+export default function AddableBlock({
   block,
   handleSelect,
   selectedBlock,
   hasSnsBlock,
-}: AddableBlockProp) => {
+}: AddableBlockProp) {
   return (
     <label
       className={`w-[238px] ${hasSnsBlock && block === 'snsBlock' && 'hidden'}`}
@@ -36,4 +36,4 @@ export const AddableBlock = ({
       />
     </label>
   );
-};
+}

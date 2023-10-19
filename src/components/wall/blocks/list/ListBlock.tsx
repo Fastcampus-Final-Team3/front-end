@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { Input } from 'antd';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
-import { BlockContainer, SingleList } from 'components/index';
 import editThickIcon from '@/assets/icons/edit-thick.svg';
 import plusIcon from '@/assets/icons/plus.svg';
-import { Icon } from '@/components/common';
+import BlockContainer from '../BlockContainer';
+import Icon from '@/components/common/Icon';
+import SingleList from './SingleList';
 
 type ListBlockProps = {
   blockUUID?: string;
 };
 
-export const ListBlock = ({ blockUUID }: ListBlockProps) => {
+export default function ListBlock({ blockUUID }: ListBlockProps) {
   const { isEdit, wall, setWall } = useWallStore();
   const [isListTitleEdit, setIsListTitleEdit] = useState(false);
 
@@ -105,4 +106,4 @@ export const ListBlock = ({ blockUUID }: ListBlockProps) => {
       </div>
     </BlockContainer>
   );
-};
+}

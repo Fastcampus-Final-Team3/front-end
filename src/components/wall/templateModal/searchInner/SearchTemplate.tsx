@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { templateText } from '@/textConstants';
 import axios from 'axios';
 import { useMutation } from 'react-query';
-import { SearchCarousel } from './SearchCarousel';
 import { Radio } from 'antd';
 import { useTemplateStore } from '@/store';
+import SearchCarousel from './SearchCarousel';
 
 type ProductItem = {
   templateId: string;
@@ -19,7 +19,9 @@ type Props = {
 
 const fetchSearchData = async (debouncedInputValue: string) => {
   const response = await axios.get(
-    `${import.meta.env.VITE_SERVER_BASE_URL}/wall/templates?search=${debouncedInputValue}`,
+    `${
+      import.meta.env.VITE_SERVER_BASE_URL
+    }/wall/templates?search=${debouncedInputValue}`,
   );
   return response.data.data.list;
 };

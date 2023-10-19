@@ -5,7 +5,7 @@ import { produce } from 'immer';
 import { useEffect, useState } from 'react';
 import editIcon from '@/assets/icons/edit.svg';
 import minusIcon from '@/assets/icons/minus.svg';
-import { Icon } from '@/components/common';
+import Icon from '@/components/common/Icon';
 
 type SingleListProps = {
   id: number;
@@ -16,14 +16,14 @@ type SingleListProps = {
   isLink?: boolean;
 };
 
-export const SingleList = ({
+export default function SingleList({
   id,
   targetListBlockIndex,
   listUUID,
   listTitle,
   listDescription,
   isLink,
-}: SingleListProps) => {
+}: SingleListProps) {
   const { wall, setWall, isEdit } = useWallStore();
 
   const [isListDescEdit, setIsListDescEdit] = useState(false);
@@ -149,4 +149,4 @@ export const SingleList = ({
       )}
     </div>
   );
-};
+}

@@ -1,13 +1,13 @@
 import { useWallStore } from '@/store';
 import { Button, Popover } from 'antd';
 import moreVerticalIcon from '@/assets/icons/more-vertical.svg';
-import { Icon } from '@/components/common';
 import { useState } from 'react';
 import MoreVerticalPopover from './popover/MoreVerticalPopover';
 
 import WallHeaderPopoverTriggers from './WallHeaderPopoverTriggers';
+import Icon from '@/components/common/Icon';
 
-export const WallHeaderActions = () => {
+export default function WallHeaderActions() {
   const { setIsEdit } = useWallStore();
 
   const [verticalMorePopoevrOpen, setVerticalMorePopoevrOpen] = useState(false);
@@ -50,4 +50,4 @@ export const WallHeaderActions = () => {
       </Popover>
     </div>
   );
-};
+}

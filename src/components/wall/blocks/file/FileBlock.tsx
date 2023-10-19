@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { Input } from 'antd';
 import { produce } from 'immer';
 import { useWallStore } from '@/store';
-import { BlockContainer, FileUpload } from 'components/index';
-import { Icon } from '@/components/common';
 import editThickIcon from '@/assets/icons/edit-thick.svg';
 import editIcon from '@/assets/icons/edit.svg';
 import { SubDatum } from '@/types/wall';
+import { FileUpload } from './FileUpload';
+import BlockContainer from '../BlockContainer';
+import Icon from '@/components/common/Icon';
 
 export type FileBlockSubDataType = Pick<
   SubDatum,
@@ -17,7 +18,7 @@ type FileBlockProps = {
   blockUUID?: string;
 };
 
-export const FileBlock = ({ blockUUID }: FileBlockProps) => {
+export default function FileBlock({ blockUUID }: FileBlockProps) {
   const { isEdit, wall, setWall } = useWallStore();
 
   const [isFileTitleEdit, setIsFileTitleEdit] = useState(false);
@@ -101,4 +102,4 @@ export const FileBlock = ({ blockUUID }: FileBlockProps) => {
       </div>
     </BlockContainer>
   );
-};
+}

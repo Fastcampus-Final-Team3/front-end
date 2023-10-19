@@ -1,11 +1,11 @@
-import { BlockContainer } from '@/components';
-import { Icon } from '@/components/common';
 import trashIcon from '@/assets/icons/trash.svg';
 import moreVerticalIcon from '@/assets/icons/more-vertical.svg';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
 import { Popover } from 'antd';
-import { AccessModal } from '../../templateModal/accessInner/AccessModal';
+import AccessModal from '../../templateModal/accessInner/AccessModal';
+import BlockContainer from '../BlockContainer';
+import Icon from '@/components/common/Icon';
 
 type SingleTemplateProps = {
   templateTitle?: string;
@@ -52,7 +52,7 @@ export default function SingleTemplate({
       <div className="sm:h-[210px] h-[115px] p-block">
         <div className="flex items-center justify-between mb-[12px]">
           <h4 className="db-18 sm:db-20">{templateTitle}</h4>
-         {isEdit && (
+          {isEdit && (
             <div className="flex sm:gap-[8px] gap-[6px]">
               <Icon
                 src={trashIcon}

@@ -1,8 +1,8 @@
 import { useWallStore } from '@/store';
-import { BlockContainer } from 'components/index';
 import SingleTemplate from './SingleTemplate';
 import { SubDatum } from '@/types/wall';
-import { ModalOpen } from 'components/index';
+import { ModalOpen } from '../../templateModal';
+import BlockContainer from '../BlockContainer';
 
 export type TemplateBlockSubDataType = Pick<
   SubDatum,
@@ -21,10 +21,10 @@ type TemplateBlockProps = {
   onClick?: () => void;
 };
 
-export const TemplateBlock = ({
+export default function TemplateBlock({
   subData: templateBlockSubData,
   templateAddButtonRef,
-}: TemplateBlockProps) => {
+}: TemplateBlockProps) {
   const { isEdit } = useWallStore();
 
   return (
@@ -59,4 +59,4 @@ export const TemplateBlock = ({
       </div>
     </BlockContainer>
   );
-};
+}

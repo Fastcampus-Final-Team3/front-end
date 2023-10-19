@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CheckOutlined, SettingOutlined } from '@ant-design/icons';
 
-export const AccessModal = () => {
+export default function AccessModal() {
   return (
     <>
       <EditeListBox>
@@ -16,7 +16,7 @@ export const AccessModal = () => {
       </EditeListBox>
     </>
   );
-};
+}
 
 const EditeListBox = styled.div`
   width: auto;

@@ -1,12 +1,12 @@
 import { Modal, message } from 'antd';
 import React, { useState } from 'react';
 import { ADDABLE_SNSS } from '@/data/constants/blocks';
-import { Icon } from '@/components/common';
 import SnsModalInput from './SnsModalInput';
 import { ModalHeader } from '@/components/common/ModalHeader';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
-import { SnsBlockSubData } from '..';
+import { SnsBlockSubData } from './SnsBlock';
+import Icon from '@/components/common/Icon';
 
 interface SnsBlockModalProps {
   unregisteredSns: string[];

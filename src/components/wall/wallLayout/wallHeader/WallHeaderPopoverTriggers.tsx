@@ -1,12 +1,12 @@
 import { Button, Popover } from 'antd';
 import MessagePopover from './popover/MessagePopover';
-import { Icon } from '@/components/common';
 import SharePopover from './popover/SharePopover';
 import AlarmPopover from './popover/AlarmPopover';
 import { useState } from 'react';
 import smsIcon from '@/assets/icons/sms.svg';
 import exportIcon from '@/assets/icons/export.svg';
 import notificationIcon from '@/assets/icons/notification.svg';
+import Icon from '@/components/common/Icon';
 
 type WallHeaderPopoverTriggersProps = {
   verticalMore?: boolean;

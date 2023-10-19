@@ -1,8 +1,8 @@
 import userIcon from '@/assets/icons/home/user.svg';
 import darkGalleryIcon from '@/assets/icons/home/dark-gallery.svg';
 import settingIcon from '@/assets/icons/home/setting.svg';
-import { Icon } from '../common';
 import { Member } from '@/types/home';
+import Icon from '../common/Icon';
 
 export default function HomeProfile({ member }: { member?: Member }) {
   return (

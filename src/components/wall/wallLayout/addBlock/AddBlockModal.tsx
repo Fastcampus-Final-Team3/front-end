@@ -3,19 +3,19 @@ import { useWallStore } from '@/store';
 import { Modal, message } from 'antd';
 import { produce } from 'immer';
 import { useState } from 'react';
-import { AddableBlock } from './AddableBlock';
 import { ModalHeader } from '@/components/common/ModalHeader';
 import { Block, BlockType, SubDatum } from '@/types/wall';
+import AddableBlock from './AddableBlock';
 
 interface AddBlockModalProps {
   setIsAddBlockModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAddBlockModalOpen: boolean;
 }
 
-export const AddBlockModal = ({
+export default function AddBlockModal({
   setIsAddBlockModalOpen,
   isAddBlockModalOpen,
-}: AddBlockModalProps) => {
+}: AddBlockModalProps) {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [selectedBlock, setSelectedBlock] = useState('');
@@ -86,4 +86,4 @@ export const AddBlockModal = ({
       </Modal>
     </>
   );
-};
+}

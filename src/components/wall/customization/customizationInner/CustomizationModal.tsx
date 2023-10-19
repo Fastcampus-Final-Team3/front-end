@@ -1,13 +1,13 @@
 import { Modal, message } from 'antd';
-import { BackgroundSettings } from './BackgroundSettings';
 import { BlockSettings } from './BlockSettings';
 import { ThemeSettings } from './ThemeSettings';
 import { ModalHeader } from '@/components/common/ModalHeader';
-import { Icon } from '@/components/common';
 import brushIcon from '@/assets/icons/brush.svg';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
 import { useState } from 'react';
+import BackgroundSettings from './BackgroundSettings';
+import Icon from '@/components/common/Icon';
 
 type CustomizationModalProps = {
   isModalOpen: boolean;
@@ -15,11 +15,11 @@ type CustomizationModalProps = {
   handleCancel: () => void;
 };
 
-export const CustomizationModal = ({
+export default function CustomizationModal({
   isModalOpen,
   handleOk,
   handleCancel,
-}: CustomizationModalProps) => {
+}: CustomizationModalProps) {
   const [messageApi, contextHolder] = message.useMessage();
   const { wall, setWall } = useWallStore();
 
@@ -105,4 +105,4 @@ export const CustomizationModal = ({
       <ThemeSettings />
     </Modal>
   );
-};
+}

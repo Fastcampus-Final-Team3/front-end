@@ -1,16 +1,16 @@
-import { BlockContainer } from '../..';
 import plusIcon from '@/assets/icons/plus.svg';
-import { Icon } from '@/components/common';
+import BlockContainer from '../../blocks/BlockContainer';
+import Icon from '@/components/common/Icon';
 
 type AddBlockButtonProps = {
   setIsAddBlockModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   addBlockButtonRef: React.MutableRefObject<null>;
 };
 
-export const AddBlockButton = ({
+export default function AddBlockButton({
   setIsAddBlockModalOpen,
   addBlockButtonRef,
-}: AddBlockButtonProps) => {
+}: AddBlockButtonProps) {
   return (
     <BlockContainer blockName="addButton">
       <div
@@ -23,4 +23,4 @@ export const AddBlockButton = ({
       </div>
     </BlockContainer>
   );
-};
+}

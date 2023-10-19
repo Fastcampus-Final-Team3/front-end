@@ -1,11 +1,11 @@
-import { Icon } from '@/components/common';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
 import resetInput from '@/assets/icons/reset-input.svg';
 import PdfPreview from './PdfPreview';
 import { message } from 'antd';
 import { Block } from '@/types/wall';
-import { FileBlockSubDataType } from '..';
+import { FileBlockSubDataType } from './FileBlock';
+import Icon from '@/components/common/Icon';
 
 export type FileBlockType = Block & {
   subData: FileBlockSubDataType;

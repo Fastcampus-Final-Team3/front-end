@@ -2,7 +2,7 @@ import { useWallStore } from '@/store';
 import DragHandle from '@/components/wall/blocks/DragHandle';
 import trashIcon from '@/assets/icons/trash.svg';
 import { produce } from 'immer';
-import { Icon } from '@/components/common';
+import Icon from '@/components/common/Icon';
 
 type BlockContainerProps = {
   children: React.ReactNode;
@@ -10,11 +10,11 @@ type BlockContainerProps = {
   blockUUID?: string;
 };
 
-export const BlockContainer = ({
+export default function BlockContainer({
   blockUUID,
   children,
   blockName,
-}: BlockContainerProps) => {
+}: BlockContainerProps) {
   const { isEdit, wall, setWall } = useWallStore();
 
   const defaultBlocks =
@@ -78,4 +78,4 @@ export const BlockContainer = ({
       {children}
     </div>
   );
-};
+}

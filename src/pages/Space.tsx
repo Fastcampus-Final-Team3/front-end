@@ -1,9 +1,11 @@
-import SpacePage from '@/components/space/SpacePage';
+import SpaceContact from '@/components/space/SpaceContact';
+import SpaceNavbar from '@/components/space/SpaceNavbar';
 
-export const Space = () => {
+export default function Space() {
   return (
     <>
-      <SpacePage />
+      <SpaceNavbar />
+      <SpaceContact />
     </>
   );
-};
+}

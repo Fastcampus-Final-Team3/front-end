@@ -2,12 +2,12 @@ import { useWallStore } from '@/store';
 import { Button, ColorPicker } from 'antd';
 import { Color } from 'antd/es/color-picker';
 import { produce } from 'immer';
-import { Icon } from '@/components/common';
 import galleryIcon from '@/assets/icons/gallery.svg';
 import { STYLE_IMAGE_FILE_SIZE_LIMIT } from '@/data/constants/customization';
 import { message } from 'antd';
+import Icon from '@/components/common/Icon';
 
-export const BackgroundSettings = ({
+export default function BackgroundSettings({
   setBackgroundOptions,
   backgroundOptions,
 }: {
@@ -15,7 +15,7 @@ export const BackgroundSettings = ({
   setBackgroundOptions: React.Dispatch<
     React.SetStateAction<'solid' | 'gradation' | 'image'>
   >;
-}) => {
+}) {
   const { wall, isEdit, setWall } = useWallStore();
   const isThemeSelected = wall?.styleSetting?.themeSetting.theme;
 
@@ -177,4 +177,4 @@ export const BackgroundSettings = ({
       </div>
     </>
   );
-};
+}

@@ -1,5 +1,5 @@
 import userIcon from '@/assets/icons/user.svg';
-import { Icon } from '@/components/common';
+import Icon from '@/components/common/Icon';
 import { useWallStore } from '@/store';
 import { useNavigate } from 'react-router-dom';
 

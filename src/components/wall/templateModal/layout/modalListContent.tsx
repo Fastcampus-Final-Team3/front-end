@@ -4,7 +4,7 @@ import { useTemplateStore } from '@/store';
 import { FolderOutlined } from '@ant-design/icons';
 import { Switch } from 'antd';
 
-export const ModalContents = () => {
+export default function ModalContents() {
   const { selectedTemplate } = useTemplateStore();
 
   const toggleBoxData = [
@@ -62,7 +62,7 @@ export const ModalContents = () => {
       </ContentsCenter>
     </div>
   );
-};
+}
 
 const ContentsHeader = styled.div`
   max-width: 600px;

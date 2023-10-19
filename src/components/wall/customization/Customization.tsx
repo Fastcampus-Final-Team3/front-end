@@ -1,14 +1,14 @@
 import { Button, message } from 'antd';
 import brushIcon from '@/assets/icons/brush.svg';
-import { CustomizationModal } from './customizationInner/CustomizationModal';
 import { useState } from 'react';
-import { Icon } from '@/components/common';
+import CustomizationModal from './customizationInner/CustomizationModal';
+import Icon from '@/components/common/Icon';
 
 type CustomizationProps = {
   styleSettingRef: React.MutableRefObject<null>;
 };
 
-export const Customization = ({ styleSettingRef }: CustomizationProps) => {
+export default function Customization({ styleSettingRef }: CustomizationProps) {
   const [messageApi, contextHolder] = message.useMessage();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,4 +39,4 @@ export const Customization = ({ styleSettingRef }: CustomizationProps) => {
       </Button>
     </>
   );
-};
+}

@@ -1,12 +1,13 @@
 import { Button, Popconfirm } from 'antd';
 import { useMemo, useState } from 'react';
 import { useWallStore } from '@/store';
-import { BlockContainer, SnsBlockModal } from 'components/index';
-import { Icon } from '@/components/common';
 import { ADDABLE_SNSS } from '@/data/constants/blocks';
 import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { produce } from 'immer';
 import { SubDatum } from '@/types/wall';
+import { SnsBlockModal } from './SnsBlockModal';
+import BlockContainer from '../BlockContainer';
+import Icon from '@/components/common/Icon';
 
 export type SnsBlockSubData = Pick<
   SubDatum,
@@ -18,7 +19,10 @@ type SnsBlockProps = {
   subData?: SnsBlockSubData[];
 };
 
-export const SnsBlock = ({ blockUUID, subData: snsData }: SnsBlockProps) => {
+export default function SnsBlock({
+  blockUUID,
+  subData: snsData,
+}: SnsBlockProps) {
   const { isEdit, wall, setWall } = useWallStore();
 
   const [isSnsModalOpen, setIsSnsModalOpen] = useState(false);
@@ -111,4 +115,4 @@ export const SnsBlock = ({ blockUUID, subData: snsData }: SnsBlockProps) => {
       </div>
     </BlockContainer>
   );
-};
+}

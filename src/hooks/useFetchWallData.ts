@@ -56,7 +56,7 @@ export default function useFetchWallData(
     return () => {
       abortController.abort();
     };
-  }, [isNew, messageApi, setWall]);
+  }, [isNew, messageApi, setWall, wallId]);
 
   useEffect(() => {
     if (wall.blocks) {

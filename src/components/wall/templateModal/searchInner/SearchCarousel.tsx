@@ -9,7 +9,7 @@ type TemplateItem = {
   templateDescription: string;
 };
 
-export const SearchCarousel = () => {
+export default function SearchCarousel() {
   const [templateData, setTemplateData] = useState<TemplateItem[]>([]);
   // const {
   //   data: templateData,
@@ -28,7 +28,9 @@ export const SearchCarousel = () => {
     const fetchData = async (PERSONAL: string) => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/wall/templates?category=${PERSONAL}`,
+          `${
+            import.meta.env.VITE_SERVER_BASE_URL
+          }/wall/templates?category=${PERSONAL}`,
         );
         const data = response.data.data.list;
         setTemplateData(data);
@@ -47,13 +49,13 @@ export const SearchCarousel = () => {
             <TempalteHeaderBox>
               <p className="templateTitle">{item.templateTitle}</p>
             </TempalteHeaderBox>
-            <p className='descriptionBox'>{item.templateDescription}</p>
+            <p className="descriptionBox">{item.templateDescription}</p>
           </TemplateBox>
         ))}
       </Carousel>
     </>
   );
-};
+}
 
 const TemplateBox = styled.div`
   width: 420px;
@@ -76,7 +78,7 @@ const TemplateBox = styled.div`
     opacity: 1;
   }
 
-  .descriptionBox{
+  .descriptionBox {
     width: auto;
     margin: auto;
     margin-top: 10px;

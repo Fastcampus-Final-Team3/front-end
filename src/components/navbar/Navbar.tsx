@@ -3,8 +3,8 @@ import info from '@/assets/icons/categories/info-circle.svg';
 import message from '@/assets/icons/categories/message.svg';
 import zoom from '@/assets/icons/categories/zoom-in.svg';
 import { Input } from 'antd';
-import { Icon } from '../common';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../common/Icon';
 
 export const Navbar = () => {
   const navigate = useNavigate();

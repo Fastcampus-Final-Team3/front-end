@@ -1,17 +1,16 @@
 import { useCallback, useState } from 'react';
 import { Button, Modal, Select, Input } from 'antd';
 import styled from 'styled-components';
-import { ModalContents } from './modalListContent';
 import { templateText } from '@/textConstants';
 import plusIcon from '@/assets/icons/plus.svg';
-import { Icon } from '@/components/common';
-import {
-  BestTemplate,
-  CategoryTemplate,
-  SelecteSearchTemplate,
-} from 'components/index';
+
 import { useTemplateStore, useWallStore } from '@/store';
 import { produce } from 'immer';
+import { BestTemplate } from '../recommend/RecommendInner';
+import { SelecteSearchTemplate } from '../searchInner/SearchTemplate';
+import Icon from '@/components/common/Icon';
+import CategoryTemplate from '../categoryInner/listtemplate/CategoryTemplate';
+import ModalContents from './modalListContent';
 
 export const ModalOpen = () => {
   const { Search } = Input;

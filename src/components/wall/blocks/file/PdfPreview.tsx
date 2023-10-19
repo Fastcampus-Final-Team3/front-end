@@ -3,11 +3,11 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { useState } from 'react';
 import { pdfjs } from 'react-pdf';
-import { Icon } from '@/components/common';
 import nextIcon from '@/assets/icons/next.svg';
 import previousIcon from '@/assets/icons/previous.svg';
-import { FileBlockType } from '..';
 import { useWindowWidth } from '@/hooks/useWindowWidth';
+import { FileBlockType } from './FileUpload';
+import Icon from '@/components/common/Icon';
 
 type PdfPreviewProps = {
   targetFileBlock: FileBlockType;

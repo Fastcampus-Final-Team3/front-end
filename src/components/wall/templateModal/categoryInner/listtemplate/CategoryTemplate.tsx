@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { ListTemplete } from 'components/index';
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import { ListTemplete } from '../..';
 
 export interface Category {
   category: string;
@@ -25,7 +25,7 @@ const fetchTemplateData = async (category: string) => {
   return response.data.data.list;
 };
 
-export const CategoryTemplate = () => {
+export default function CategoryTemplate() {
   const [categoryList, setCategoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -84,7 +84,7 @@ export const CategoryTemplate = () => {
       </TemplateList>
     </CategoryLayout>
   );
-};
+}
 
 const CategoryLayout = styled.div`
   width: 100%;

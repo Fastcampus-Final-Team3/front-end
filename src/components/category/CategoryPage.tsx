@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Button, message } from 'antd';
-import { CategoryCard } from 'components/index';
 import { CATEGORIES } from '@/data/constants/category';
 import { useWallStore } from '@/store';
 import { DEFAULT_WALL } from '@/data/constants/blocks';
+import { CategoryCard } from './CategoryCard';
 
-export const CategoryPage = () => {
+export default function CategoryPage() {
   const { setWall, setIsEdit } = useWallStore();
   const [messageApi, contextHolder] = message.useMessage();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -67,4 +67,4 @@ export const CategoryPage = () => {
       </div>
     </div>
   );
-};
+}

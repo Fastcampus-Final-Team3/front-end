@@ -3,12 +3,11 @@ import { produce } from 'immer';
 import galleryIcon from '@/assets/icons/gallery.svg';
 import { message } from 'antd';
 import { IMAGE_FILE_SIZE_LIMIT } from '@/data/constants/blocks';
-import { Icon } from '@/components/common';
 import { useState } from 'react';
-import { ImageData } from '..';
 import { LoadingOutlined } from '@ant-design/icons';
+import Icon from '@/components/common/Icon';
 
-export const BackgroundImage = () => {
+export default function BackgroundImage() {
   const { wall, setWall, isEdit } = useWallStore();
   const [isUploading, setIsUploading] = useState(false);
 
@@ -93,4 +92,4 @@ export const BackgroundImage = () => {
       )}
     </div>
   );
-};
+}

@@ -1,14 +1,14 @@
 import { useWallStore } from '@/store';
-import { WallHeaderActions } from 'components/index';
 import WallHeaderUser from './WallHeaderUser';
 import closeIcon from '@/assets/icons/close.svg';
 import WallHeaderInput from './WallHeaderInput';
-import { Icon } from '@/components/common';
 import WallHeaderEditButtons from './WallHeaderSavigButtons';
 import { useState } from 'react';
 import MobileFixedFooter from './MobileFixedFooter';
 import mobileDropdown from '@/assets/icons/mobile-dropdown.svg';
 import ConfirmCancelModal from './ConfirmCancelModal';
+import Icon from '@/components/common/Icon';
+import WallHeaderActions from './WallHeaderAction';
 
 type WallHeaderProps = {
   tourPreviewRef: React.MutableRefObject<null>;
@@ -16,11 +16,11 @@ type WallHeaderProps = {
   isNew: boolean;
 };
 
-export const WallHeader = ({
+export default function WallHeader({
   tourPreviewRef,
   tourMobilePreviewRef,
   isNew,
-}: WallHeaderProps) => {
+}: WallHeaderProps) {
   const { isEdit, setIsEdit, isPreview, getWall } = useWallStore();
 
   const [dropdownOpen, setdropDownOpen] = useState(false);
@@ -97,4 +97,4 @@ export const WallHeader = ({
       </div>
     </header>
   );
-};
+}

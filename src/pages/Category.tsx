@@ -1,10 +1,10 @@
-import { CategoryPage, Navbar } from '@/components';
+import { Navbar } from '@/components/navbar/Navbar';
 
-export const Category = () => {
+export default function Category() {
   return (
     <>
       <Navbar />
       <CategoryPage />
     </>
   );
-};
+}

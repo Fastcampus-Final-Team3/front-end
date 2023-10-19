@@ -1,14 +1,15 @@
-import { Input } from 'antd';
-import { ProfileImage } from './ProfileImage';
 import { useWallStore } from '@/store';
 import { produce } from 'immer';
-import { BackgroundImage, BlockContainer } from '..';
+import BlockContainer from '../BlockContainer';
+import BackgroundImage from './BackgroundImage';
+import { ProfileImage } from './ProfileImage';
+import { Input } from 'antd';
 
 type WallInfoBlockProps = {
   wallInfoRef: React.MutableRefObject<null>;
 };
 
-export const WallInfoBlock = ({ wallInfoRef }: WallInfoBlockProps) => {
+export default function WallInfoBlock({ wallInfoRef }: WallInfoBlockProps) {
   const { wall, setWall, isEdit } = useWallStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,4 +72,4 @@ export const WallInfoBlock = ({ wallInfoRef }: WallInfoBlockProps) => {
       </div>
     </BlockContainer>
   );
-};
+}

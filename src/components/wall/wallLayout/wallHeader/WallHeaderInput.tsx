@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import inputSuffixIcon from '@/assets/icons/input-suffix.svg';
-import { Icon } from '@/components/common';
 import { useWallStore } from '@/store';
+import Icon from '@/components/common/Icon';
 
 type WallHeaderInputProps = {
   dropdownOpen?: boolean;

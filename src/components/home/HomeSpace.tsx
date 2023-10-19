@@ -1,8 +1,8 @@
-import { Icon } from '../common';
 import spaceIcon from '@/assets/icons/home/space.svg';
 import userIcon from '@/assets/icons/home/user.svg';
 import arrowRightIcon from '@/assets/icons/home/arrowRight.svg';
 import { useNavigate } from 'react-router-dom';
+import Icon from '../common/Icon';
 
 export default function HomeSpace({ memberName }: { memberName?: string }) {
   const navigate = useNavigate();

@@ -1,7 +1,6 @@
 import { Input } from 'antd';
 import { produce } from 'immer';
 import { useEffect, useState } from 'react';
-import { BlockContainer } from 'components/index';
 import { useWallStore } from '@/store';
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import FroalaEditorView from 'react-froala-wysiwyg/FroalaEditorView';
@@ -9,14 +8,15 @@ import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import 'froala-editor/js/languages/ko.js';
-import { Icon } from '@/components/common';
 import editThickIcon from '@/assets/icons/edit-thick.svg';
+import BlockContainer from '../BlockContainer';
+import Icon from '@/components/common/Icon';
 
 type FreeBlockProps = {
   blockUUID?: string;
 };
 
-export const FreeBlock = ({ blockUUID }: FreeBlockProps) => {
+export default function FreeBlock({ blockUUID }: FreeBlockProps) {
   const { isEdit, wall, setWall } = useWallStore();
   const [isFreeTitleEdit, setIsFreeTitleEdit] = useState(false);
 
@@ -95,4 +95,4 @@ export const FreeBlock = ({ blockUUID }: FreeBlockProps) => {
       </div>
     </BlockContainer>
   );
-};
+}
