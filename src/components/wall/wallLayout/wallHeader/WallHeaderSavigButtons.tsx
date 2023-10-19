@@ -19,6 +19,7 @@ export default function WallHeaderEditButtons({
   const { wall, setIsEdit, isPreview, setIsPreview, isEdit } = useWallStore();
   const { memberInfo } = useMemberInfo();
   const newWall = { ...wall, spaceId: 1 };
+
   const updateWall = {
     ...wall,
     spaceId: 1,
@@ -28,8 +29,7 @@ export default function WallHeaderEditButtons({
       styleSettingBlockId: 1,
     },
   };
-  console.log(updateWall);
-  const [saving, setSaving] = useState(false);
+
   const [tempSaving, setTempSaving] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -64,8 +64,10 @@ export default function WallHeaderEditButtons({
       setIsPreview(false);
     }
   };
+
+  const [isSaving, setIsSaving] = useState(false);
   const handleSave = async () => {
-    setSaving(true);
+    setIsSaving(true);
     try {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER_BASE_URL}/wall`,
@@ -87,7 +89,7 @@ export default function WallHeaderEditButtons({
       console.log(error);
       messageApi.error({ content: '저장 실패' });
     } finally {
-      setSaving(false);
+      setIsSaving(false);
       setIsEdit(false);
       setIsPreview(false);
     }
@@ -119,8 +121,8 @@ export default function WallHeaderEditButtons({
         dm-14 text-white"
           type="primary"
           onClick={handleSave}
-          loading={saving}
-          disabled={saving}
+          loading={isSaving}
+          disabled={isSaving}
         >
           저장
         </Button>
