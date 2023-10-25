@@ -1,6 +1,24 @@
 import { create } from 'zustand';
 import { WallType } from '@/types/wall';
 
+type User = {
+  accessToken?: string;
+  memberId?: number;
+  nickname?: string;
+  refreshToken?: string;
+} | null;
+
+export type UserStoreType = {
+  user: User | null;
+  setUser: (user: User) => void;
+};
+export const useUserStore = create<UserStoreType>((set) => ({
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user') as string)
+    : null,
+  setUser: (user) => set(() => ({ user })),
+}));
+
 export type WallStoreType = {
   isEdit: boolean;
   setIsEdit: (bool: boolean) => void;
