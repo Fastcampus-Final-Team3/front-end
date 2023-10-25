@@ -15,6 +15,7 @@ export default function TempSaveModal({
   setIsTempModalOpen,
   isTempModalOpen,
   memberInfo,
+  spaceWallId,
 }: ConfirmCancelModalProps) {
   const { setWall, setIsEdit } = useWallStore();
 

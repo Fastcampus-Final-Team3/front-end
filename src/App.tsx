@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Wall from './pages/Wall';
 import Login from './pages/login';
 import ProtectedRoute from './pages/ProtectedRoute';
+import Space from './pages/Space';
 
 export default function App() {
   return (
@@ -25,7 +26,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      {/* <Route path="/space/personal" element={<Space />} /> */}
+      <Route path="/space/:spaceId" element={<Space />} />
       {/* <Route path="/category" element={<Category />} /> */}
       {/* <Route path="wall/temp" element={<WallAllPage />} /> */}
       {/* <Route path="wall/:wallId" element={<WallAllPage />} /> */}

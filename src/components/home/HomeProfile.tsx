@@ -11,19 +11,19 @@ export default function HomeProfile({ member }: { member?: Member }) {
         <Icon src={userIcon} className="w-[38px]" />
         <Icon
           src={darkGalleryIcon}
-          className="absolute -right-[4px] -bottom-[4px] hover"
+          className="absolute -right-[4px] -bottom-[4px]"
         />
       </div>
       <div className="flex flex-col gap-[10px]">
         <div className="flex gap-[8px] items-center">
           <p className="db-20 ">{member?.memberName}</p>
           <p className="db-12 text-blue">⦁ {member?.memberShip}</p>
-          <p className="db-12 text-blue border-[1px] border-blue border-solid px-[10px] py-[4px] rounded-full hover">
+          <p className="db-12 text-blue border-[1px] border-blue border-solid px-[10px] py-[4px] rounded-full">
             업그레이드
           </p>
         </div>
         <div className="text-gray88 dm-14">abcd@gmail.com </div>
-        <div className="flex items-center hover">
+        <div className="flex items-center">
           <Icon src={settingIcon} />
           <p className="text-gray88 dm-14">계정설정</p>
         </div>

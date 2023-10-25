@@ -21,6 +21,7 @@ import Customization from '@/components/wall/customization/Customization';
 
 export default function WallPage() {
   const { wallId } = useParams();
+
   const { state } = useLocation();
   const isNew = !!state;
 
@@ -51,9 +52,10 @@ export default function WallPage() {
     loading,
     error,
     sortableBlocks,
+
     setWall,
     setSortableBlocks,
-  } = useFetchWallData(BlockMapper, isNew, wallId);
+  } = useFetchWallData(BlockMapper, isNew, wallId, 35);
 
   const [tourOpen, setTourOpen] = useState(!localStorage.getItem('hasVisited'));
 

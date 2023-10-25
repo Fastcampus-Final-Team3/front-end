@@ -1,4 +1,4 @@
-export interface MemberInfo {
+export interface SpacesInfo {
   member: Member;
   spaceWall: SpaceWall;
 }

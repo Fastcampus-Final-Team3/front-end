@@ -1,5 +1,5 @@
 import useMemberInfo from '@/hooks/useMemberInfo';
-import { useWallStore } from '@/store';
+import { useUserStore, useWallStore } from '@/store';
 import { Button, message } from 'antd';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ export default function WallHeaderEditButtons({
   footer,
   isNew,
 }: WallHeaderEditButtonsProps) {
+  const { user } = useUserStore();
   const navigate = useNavigate();
   const { wall, setIsEdit, isPreview, setIsPreview, isEdit } = useWallStore();
   const { memberInfo } = useMemberInfo();
@@ -22,8 +23,6 @@ export default function WallHeaderEditButtons({
 
   const updateWall = {
     ...wall,
-    spaceId: 1,
-    spaceWallId: 52,
     styleSetting: {
       ...wall.styleSetting,
       styleSettingBlockId: 1,
@@ -75,6 +74,7 @@ export default function WallHeaderEditButtons({
           method: isNew ? 'POST' : 'PUT',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${user?.accessToken}`,
           },
           body: JSON.stringify({
             data: isNew ? newWall : updateWall,
@@ -82,8 +82,10 @@ export default function WallHeaderEditButtons({
         },
       );
       if (response.ok) {
+        console.log('12');
         const data = await response.json();
-        navigate(`/wall/${data.data.spaceWallId}`);
+        console.log(data);
+        // navigate(`/wall/${data.data.spaceWallId}`);
       }
     } catch (error) {
       console.log(error);

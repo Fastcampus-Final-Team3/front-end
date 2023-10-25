@@ -12,21 +12,21 @@ export const Navbar = () => {
   const { setUser, user } = useUserStore();
   return (
     <header className="bg-sky">
-      <div className="flex items-center h-[48px] sm:h-[70px] px-[24px] sm:px-[30px] justify-between max-w-[1920px] mx-auto">
+      <div className="flex items-center h-[48px] sm:h-[70px] px-[24px] sm:px-[30px] justify-between max-w-[1920px] mx-auto hover">
         <img
           src={joberLogo}
           alt="jober logo"
-          className="w-[80px] sm:w-[115px] hover"
+          className="w-[80px] sm:w-[115px]"
           onClick={() => navigate('/')}
         />
 
         {/* DESKTOP */}
         <div className="items-center gap-[48px] hidden sm:flex">
-          <div className=" flex items-center hover">
+          <div className=" flex items-center">
             <Icon src={info} className="mr-[6px]" />
             <span>메뉴얼</span>
           </div>
-          <div className="flex items-center hover">
+          <div className="flex items-center">
             <Icon src={message} className="mr-[6px]" />
             <span>문의하기</span>
           </div>
@@ -45,8 +45,8 @@ export const Navbar = () => {
 
         {/* MOBILE */}
         <div className=" items-center gap-[22px] flex sm:hidden">
-          <Icon src={zoom} className="mr-[6px] hover" />
-          <Icon src={message} className="mr-[6px] hover" />
+          <Icon src={zoom} className="mr-[6px]" />
+          <Icon src={message} className="mr-[6px]" />
         </div>
       </div>
     </header>

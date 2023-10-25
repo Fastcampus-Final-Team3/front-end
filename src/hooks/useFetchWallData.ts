@@ -1,4 +1,5 @@
-import { useWallStore } from '@/store';
+import { customAxios } from '@/api/customAxios';
+import { useUserStore, useWallStore } from '@/store';
 import { BlockType, SubDatum } from '@/types/wall';
 import { message } from 'antd';
 import React from 'react';
@@ -20,7 +21,9 @@ export default function useFetchWallData(
   },
   isNew?: boolean,
   wallId?: string,
+  spaceId?: number,
 ) {
+  const { user } = useUserStore();
   const [messageApi, contextHolder] = message.useMessage();
   const { wall, setWall, isEdit } = useWallStore();
   const [error, setError] = useState<Error>();
@@ -33,15 +36,31 @@ export default function useFetchWallData(
     const getData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/wall/1/1/${wallId}`,
-          { signal },
-        );
-        if (!response.ok) {
-          throw new Error('error while data fetching');
+
+        if (Number(wallId)) {
+          const response = await fetch(
+            `${import.meta.env.VITE_SERVER_BASE_URL}/wall/${spaceId}/${wallId}`,
+            {
+              signal,
+              headers: {
+                Authorization: `Bearer ${user?.accessToken}`,
+                'Content-Type': 'application/json',
+              },
+            },
+          );
+          if (!response.ok) {
+            throw new Error('error while data fetching');
+          }
+          const wallData = await response.json();
+          setWall(wallData.data);
+        } else {
+          const response = await customAxios(`/wall/shareURL/${wallId}`, {
+            signal,
+          });
+          console.log(response);
+          // const wallData = await response.json();
+          // setWall(wallData.data);
         }
-        const wallData = await response.json();
-        setWall(wallData.data);
       } catch (error) {
         // TODO : 에러 핸들링
         console.log(error);

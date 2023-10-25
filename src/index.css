@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a {
+  color: #000f;
+  text-decoration: none;
+  outline: none;
+}
+
 @layer base {
   html {
     font-family: 'Noto Sans', sans-serif;

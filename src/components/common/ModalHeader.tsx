@@ -2,7 +2,7 @@ import { Button, Divider } from 'antd';
 
 type ModalHeaderProps = {
   handleCloseModal: () => void;
-  handleOk: () => void;
+  handleOk?: () => void;
   title: React.ReactNode;
   reset?: boolean;
   handleResetStyle?: () => void;
