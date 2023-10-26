@@ -15,7 +15,6 @@ import AddSpaceModal from '@/components/home/AddSpaceModal';
 export default function Home() {
   const [isAddSpaceModalOpen, setIsAddSpaceModalOpen] = useState(false);
   const [spacesInfo, setSpacesInfo] = useState<SpacesInfo>();
-  console.log(spacesInfo);
   const { user } = useUserStore();
   useEffect(() => {
     const getUserSpaces = async () => {

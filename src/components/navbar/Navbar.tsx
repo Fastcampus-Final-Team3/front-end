@@ -12,11 +12,11 @@ export const Navbar = () => {
   const { setUser, user } = useUserStore();
   return (
     <header className="bg-sky">
-      <div className="flex items-center h-[48px] sm:h-[70px] px-[24px] sm:px-[30px] justify-between max-w-[1920px] mx-auto hover">
+      <div className="flex items-center h-[48px] sm:h-[70px] px-[24px] sm:px-[30px] justify-between max-w-[1920px] mx-auto">
         <img
           src={joberLogo}
           alt="jober logo"
-          className="w-[80px] sm:w-[115px]"
+          className="w-[80px] sm:w-[115px] hover"
           onClick={() => navigate('/')}
         />
 

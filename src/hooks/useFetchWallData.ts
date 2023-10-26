@@ -1,5 +1,5 @@
 import { customAxios } from '@/api/customAxios';
-import { useUserStore, useWallStore } from '@/store';
+import { useWallStore } from '@/store';
 import { BlockType, SubDatum } from '@/types/wall';
 import { message } from 'antd';
 import React from 'react';
@@ -23,7 +23,6 @@ export default function useFetchWallData(
   wallId?: string,
   spaceId?: number,
 ) {
-  const { user } = useUserStore();
   const [messageApi, contextHolder] = message.useMessage();
   const { wall, setWall, isEdit } = useWallStore();
   const [error, setError] = useState<Error>();
@@ -36,30 +35,19 @@ export default function useFetchWallData(
     const getData = async () => {
       try {
         setLoading(true);
-
         if (Number(wallId)) {
-          const response = await fetch(
-            `${import.meta.env.VITE_SERVER_BASE_URL}/wall/${spaceId}/${wallId}`,
-            {
-              signal,
-              headers: {
-                Authorization: `Bearer ${user?.accessToken}`,
-                'Content-Type': 'application/json',
-              },
-            },
-          );
-          if (!response.ok) {
-            throw new Error('error while data fetching');
-          }
-          const wallData = await response.json();
-          setWall(wallData.data);
+          const response = await customAxios(`/wall/${spaceId}/${wallId}`, {
+            signal,
+          });
+          const wallData = response.data.data;
+          setWall(wallData);
         } else {
-          const response = await customAxios(`/wall/shareURL/${wallId}`, {
+          const response = await customAxios(`/wall/${wallId}`, {
             signal,
           });
           console.log(response);
-          // const wallData = await response.json();
-          // setWall(wallData.data);
+          const wallData = response.data.data;
+          setWall(wallData);
         }
       } catch (error) {
         // TODO : 에러 핸들링
@@ -75,7 +63,7 @@ export default function useFetchWallData(
     return () => {
       abortController.abort();
     };
-  }, [isNew, messageApi, setWall, wallId]);
+  }, [isNew, messageApi, setWall, spaceId, wallId]);
 
   useEffect(() => {
     if (wall.blocks) {

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 a {
-  color: #000f;
+  color: #000;
   text-decoration: none;
   outline: none;
 }

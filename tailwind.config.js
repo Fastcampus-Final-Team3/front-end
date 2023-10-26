@@ -9,7 +9,7 @@ export default {
       gray88: '#888888',
       line: '#E7E7E7',
       gray: '#F3F4F5',
-      lightGray: '#FAFAFA',
+      lightGray: '#f1f1f5',
       beige: '#FAF9F7',
       lightPurple: '#FCFDFF',
       sky: '#EDF8FC',
