@@ -1,4 +1,4 @@
-import { Icon } from '@/components/common';
+import Icon from '@/components/common/Icon';
 import { Button } from 'antd';
 
 type ActionButtonProps = { type: string; className?: string };

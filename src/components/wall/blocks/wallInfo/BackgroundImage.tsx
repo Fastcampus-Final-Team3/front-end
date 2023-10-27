@@ -46,14 +46,12 @@ export default function BackgroundImage() {
           if (!response.ok) {
             throw new Error('Upload failed');
           }
-          const data: ImageData = await response.json();
-          console.log(data);
+          const data = await response.json();
           setWall(
             produce(wall, (draft) => {
               draft.wallInfoBlock.backgroundImgURL = data.url;
             }),
           );
-          console.log('Upload successful:', data);
           message.success('이미지를 업로드하였습니다.');
         } catch (err) {
           console.error('Error uploading image:', err);

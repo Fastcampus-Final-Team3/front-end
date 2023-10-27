@@ -1,4 +1,3 @@
-import { useWallStore } from '@/store';
 import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +11,6 @@ export default function ConfirmCancelModal({
   isConfirmCancelModalOpen,
 }: ConfirmCancelModalProps) {
   const navigate = useNavigate();
-  const { setIsEdit } = useWallStore();
 
   const handleDeleteWall = () => {
     setIsConfirmCancelModalOpen(false);
