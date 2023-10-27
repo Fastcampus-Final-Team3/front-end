@@ -1,32 +1,38 @@
-import Icon from '@/components/common/Icon';
-import { Navbar } from '@/components/navbar/Navbar';
-import { useUserStore } from '@/store';
 import { useEffect, useState } from 'react';
+import { useUserStore } from '@/store';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd';
+import useCustomAxios from '@/hooks/useCustomAxios';
+
+import type { SpacesInfo } from '@/types/home';
+
+// components
+import HomeProfile from '@/components/home/HomeProfile';
+import Navbar from '@/components/navbar/Navbar';
+import Icon from '@/components/common/Icon';
+import AddSpaceModal from '@/components/home/AddSpaceModal';
+
+// assets
 import arrowRightIcon from '@/assets/icons/home/arrowRight.svg';
 import spaceIcon from '@/assets/icons/home/space.svg';
 import userIcon from '@/assets/icons/home/user.svg';
-import HomeProfile from '@/components/home/HomeProfile';
-import { customAxios } from '@/api/customAxios';
-import { SpacesInfo } from '@/types/home';
-import { Link } from 'react-router-dom';
-import { Button } from 'antd';
-import AddSpaceModal from '@/components/home/AddSpaceModal';
 
 export default function Home() {
+  const customAxios = useCustomAxios();
   const [isAddSpaceModalOpen, setIsAddSpaceModalOpen] = useState(false);
   const [spacesInfo, setSpacesInfo] = useState<SpacesInfo>();
-  const { user } = useUserStore();
+
   useEffect(() => {
     const getUserSpaces = async () => {
       try {
-        const response = await customAxios(`/home/${user?.memberId}`);
+        const response = await customAxios(`home`);
         setSpacesInfo(response.data.data as SpacesInfo);
       } catch (error) {
         console.error(error);
       }
     };
     getUserSpaces();
-  }, [user?.accessToken, user?.memberId]);
+  }, []);
 
   return (
     <>
@@ -47,14 +53,17 @@ export default function Home() {
                 지인들에게 공지·레터·계약문서를 보낼 수 있어요.
               </p>
               <Link
-                to={`/space/${spacesInfo?.spaceWall.personal[0].spaceId}`}
-                state="personal"
+                to={`/space/${spacesInfo?.space.personal[0].spaceId}`}
+                state={{
+                  spaceType: 'personal',
+                  spaceTitle: spacesInfo?.space.personal[0].spaceTitle,
+                }}
                 className="flex items-center justify-between hover"
               >
                 <div>
                   <Icon src={userIcon} className="w-[16px] mr-[15px]" />
                   <span className="dm-16">
-                    {spacesInfo?.spaceWall.personal[0].spaceTitle}
+                    {spacesInfo?.space.personal[0].spaceTitle}
                   </span>
                 </div>
                 <Icon src={arrowRightIcon} />
@@ -68,10 +77,13 @@ export default function Home() {
                 다양한 자버 문서를 보낼 수 있어요.
               </p>
               <div className="flex flex-col gap-6">
-                {spacesInfo?.spaceWall.organization.map((space) => (
+                {spacesInfo?.space.organization.map((space) => (
                   <Link
                     to={`/space/${space.spaceId}`}
-                    state="organization"
+                    state={{
+                      spaceType: 'organization',
+                      spaceTitle: space.spaceTitle,
+                    }}
                     className="flex items-center justify-between hover "
                     key={space.spaceId}
                   >

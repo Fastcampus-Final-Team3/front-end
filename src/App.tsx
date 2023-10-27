@@ -4,6 +4,8 @@ import Wall from './pages/Wall';
 import Login from './pages/login';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Space from './pages/Space';
+import Category from './pages/Category';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -18,18 +20,25 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/wall/:wallId" element={<Wall />} />
       <Route
-        path="/wall/:wallId"
+        path="/space/:spaceId"
         element={
           <ProtectedRoute>
-            <Wall />
+            <Space />
           </ProtectedRoute>
         }
       />
-      <Route path="/space/:spaceId" element={<Space />} />
-      {/* <Route path="/category" element={<Category />} /> */}
-      {/* <Route path="wall/temp" element={<WallAllPage />} /> */}
-      {/* <Route path="wall/:wallId" element={<WallAllPage />} /> */}
+      <Route
+        path="/category"
+        element={
+          <ProtectedRoute>
+            <Category />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/notFound" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

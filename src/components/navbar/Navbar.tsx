@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Icon from '../common/Icon';
 import { useUserStore } from '@/store';
 
-export const Navbar = () => {
+export default function Navbar() {
   const navigate = useNavigate();
   const { setUser, user } = useUserStore();
   return (
@@ -37,7 +37,14 @@ export const Navbar = () => {
           />
           <div className="flex items-center gap-2">
             <div>{user?.nickname}님</div>
-            <Button onClick={() => setUser(null)} danger>
+            {/* TODO 로그아웃 api */}
+            <Button
+              onClick={() => {
+                setUser(null);
+                localStorage.removeItem('user');
+              }}
+              danger
+            >
               로그아웃
             </Button>
           </div>
@@ -51,4 +58,4 @@ export const Navbar = () => {
       </div>
     </header>
   );
-};
+}

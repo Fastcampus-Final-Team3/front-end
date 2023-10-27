@@ -1,63 +1,58 @@
-import { DEFAULT_WALL } from '@/data/constants/blocks';
+import useCustomAxios from '@/hooks/useCustomAxios';
 import { useWallStore } from '@/store';
-import { MemberInfo } from '@/types/home';
-import { Button, Modal, message } from 'antd';
+import { Button, Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 type ConfirmCancelModalProps = {
   setIsTempModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isTempModalOpen: boolean;
-  memberInfo: MemberInfo | null;
-  spaceWallId?: number;
+  spaceId?: string;
+  spaceType?: string;
+  tempSpaceWallId?: number;
 };
 
 export default function TempSaveModal({
   setIsTempModalOpen,
   isTempModalOpen,
-  memberInfo,
-  spaceWallId,
+  spaceId,
+  spaceType,
+  tempSpaceWallId,
 }: ConfirmCancelModalProps) {
+  const customAxios = useCustomAxios();
   const { setWall, setIsEdit } = useWallStore();
 
   const navigate = useNavigate();
 
   const handleDeleteTemp = async () => {
-    setIsTempModalOpen(false);
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/wall-temporary`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            memberId: memberInfo?.member.memberId,
-            spaceId: memberInfo?.spaceWall.personal[0].spaceId,
-          }),
-        },
+      await customAxios.delete(
+        `wall-temporary/${localStorage.getItem('spaceId')}`,
       );
-      if (res.ok) {
-        message.success('임시저장 데이터를 삭제했습니다.');
-        navigate('/category');
-      }
+      navigate('/category', { state: { spaceId, spaceType } });
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsTempModalOpen(false);
     }
   };
 
   const handleContinueTemp = async () => {
-    setIsTempModalOpen(false);
-
-    setWall({
-      ...DEFAULT_WALL['temp'],
-      shareURL: crypto.randomUUID().replace(/-/g, ''),
-      isPublic: true,
-      category: 'personal',
-      memberId: '1',
-    });
-    setIsEdit(true);
-    navigate(`/wall/temp`, { state: { isNew: true } });
+    try {
+      const response = await customAxios(
+        `wall-temporary/${spaceId}/${tempSpaceWallId}`,
+      );
+      const tempWall = response.data.data;
+      setWall(tempWall);
+      setIsEdit(true);
+      navigate(`/wall/${tempSpaceWallId}`, {
+        state: { spaceId, isNew: true },
+      });
+      return;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsTempModalOpen(false);
+    }
   };
 
   return (
@@ -79,14 +74,14 @@ export default function TempSaveModal({
             onClick={handleDeleteTemp}
             className="text-red w-full  h-[66px] border-l-0 border-line border-b-0 rounded-none border-none"
           >
-            아니오
+            삭제
           </Button>
           <div className="w-[1px] bg-line" />
           <Button
             className="text-blue w-full h-[66px] border-r-0 border-b-0 border-none border-l-[1px] rounded-none"
             onClick={handleContinueTemp}
           >
-            네
+            이어서 작성
           </Button>
         </div>
       </div>

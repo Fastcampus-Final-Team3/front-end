@@ -1,9 +1,11 @@
-import { customAxios } from '@/api/customAxios';
-import { useWallStore } from '@/store';
+import { useUserStore, useWallStore } from '@/store';
 import { BlockType, SubDatum } from '@/types/wall';
 import { message } from 'antd';
 import React from 'react';
 import { useEffect, useState } from 'react';
+import useCustomAxios from './useCustomAxios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 type SortableBlockType = {
   id: string;
@@ -21,8 +23,11 @@ export default function useFetchWallData(
   },
   isNew?: boolean,
   wallId?: string,
-  spaceId?: number,
+  spaceId?: string,
 ) {
+  const navigate = useNavigate();
+  const { user } = useUserStore();
+  const customAxios = useCustomAxios();
   const [messageApi, contextHolder] = message.useMessage();
   const { wall, setWall, isEdit } = useWallStore();
   const [error, setError] = useState<Error>();
@@ -36,21 +41,33 @@ export default function useFetchWallData(
       try {
         setLoading(true);
         if (Number(wallId)) {
-          const response = await customAxios(`/wall/${spaceId}/${wallId}`, {
+          const response = await customAxios(`wall/${spaceId}/${wallId}`, {
             signal,
           });
           const wallData = response.data.data;
           setWall(wallData);
-        } else {
-          const response = await customAxios(`/wall/${wallId}`, {
-            signal,
-          });
-          console.log(response);
-          const wallData = response.data.data;
-          setWall(wallData);
+          return;
         }
+        if (user) {
+          const response = await customAxios(`wall/${wallId}`, {
+            signal,
+          });
+          const wallData = response.data.data;
+          setWall(wallData);
+          return;
+        }
+        const response = await axios(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/wall/${wallId}`,
+          {
+            signal,
+          },
+        );
+        const wallData = response.data.data;
+        setWall(wallData);
+        return;
       } catch (error) {
         // TODO : 에러 핸들링
+        navigate('/notFound');
         console.log(error);
         setError(error as Error);
         messageApi.error({ content: 'data fetching error' });
@@ -63,7 +80,7 @@ export default function useFetchWallData(
     return () => {
       abortController.abort();
     };
-  }, [isNew, messageApi, setWall, spaceId, wallId]);
+  }, []);
 
   useEffect(() => {
     if (wall.blocks) {

@@ -1,4 +1,4 @@
-import useMemberInfo from '@/hooks/useMemberInfo';
+import useCustomAxios from '@/hooks/useCustomAxios';
 import { useUserStore, useWallStore } from '@/store';
 import { Button, message } from 'antd';
 import { useState } from 'react';
@@ -10,23 +10,24 @@ type WallHeaderEditButtonsProps = {
   isNew?: boolean;
 };
 
-export default function WallHeaderEditButtons({
+export default function WallHeaderSavingButtons({
   tourPreviewRef,
   footer,
   isNew,
 }: WallHeaderEditButtonsProps) {
+  const customAxios = useCustomAxios();
   const { user } = useUserStore();
   const navigate = useNavigate();
   const { wall, setIsEdit, isPreview, setIsPreview, isEdit } = useWallStore();
-  const { memberInfo } = useMemberInfo();
-  const newWall = { ...wall, spaceId: 1 };
+  const newWall = {
+    ...wall,
+    memberId: user?.memberId,
+    spaceId: localStorage.getItem('spaceId'),
+  };
 
   const updateWall = {
     ...wall,
-    styleSetting: {
-      ...wall.styleSetting,
-      styleSettingBlockId: 1,
-    },
+    spaceId: localStorage.getItem('spaceId'),
   };
 
   const [tempSaving, setTempSaving] = useState(false);
@@ -40,24 +41,19 @@ export default function WallHeaderEditButtons({
   const handleTempSave = async () => {
     setTempSaving(true);
     try {
-      await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/wall-temporary`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      await customAxios.post(`wall-temporary`, {
+        data: {
+          ...wall,
+          memberId: user?.memberId,
+          spaceId: localStorage.getItem('spaceId'),
         },
-        body: JSON.stringify({
-          data: {
-            ...wall,
-            spaceId: memberInfo?.spaceWall.personal[0].spaceId,
-          },
-        }),
       });
       message.success('임시저장이 되었습니다.');
     } catch (error) {
       console.log(error);
       messageApi.error('임시저장에 실패했습니다.');
     } finally {
-      navigate(`/space/personal`);
+      navigate('/');
       setTempSaving(false);
       setIsEdit(false);
       setIsPreview(false);
@@ -67,33 +63,34 @@ export default function WallHeaderEditButtons({
   const [isSaving, setIsSaving] = useState(false);
   const handleSave = async () => {
     setIsSaving(true);
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/wall`,
-        {
-          method: isNew ? 'POST' : 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user?.accessToken}`,
-          },
-          body: JSON.stringify({
-            data: isNew ? newWall : updateWall,
-          }),
-        },
-      );
-      if (response.ok) {
-        console.log('12');
-        const data = await response.json();
-        console.log(data);
-        // navigate(`/wall/${data.data.spaceWallId}`);
+    if (isNew) {
+      try {
+        const response = await customAxios.post('wall', {
+          data: newWall,
+        });
+        navigate(`/wall/${response.data.data.spaceWallId}`);
+      } catch (error) {
+        console.log(error);
+        messageApi.error({ content: '저장 실패' });
+      } finally {
+        setIsSaving(false);
+        setIsEdit(false);
+        setIsPreview(false);
       }
-    } catch (error) {
-      console.log(error);
-      messageApi.error({ content: '저장 실패' });
-    } finally {
-      setIsSaving(false);
-      setIsEdit(false);
-      setIsPreview(false);
+    } else {
+      try {
+        await customAxios.put(`wall`, {
+          data: updateWall,
+        });
+        navigate(`/wall/${wall.shareURL}`);
+      } catch (error) {
+        console.log(error);
+        messageApi.error({ content: '저장 실패' });
+      } finally {
+        setIsSaving(false);
+        setIsEdit(false);
+        setIsPreview(false);
+      }
     }
   };
 

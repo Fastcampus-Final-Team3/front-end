@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, message } from 'antd';
 import { CATEGORIES } from '@/data/constants/category';
-import { useWallStore } from '@/store';
+import { useUserStore, useWallStore } from '@/store';
 import { DEFAULT_WALL } from '@/data/constants/blocks';
 import { CategoryCard } from './CategoryCard';
 
-export default function CategoryPage() {
+export default function CategoryPage({ spaceType }: { spaceType: string }) {
+  const { user } = useUserStore();
   const { setWall, setIsEdit } = useWallStore();
   const [messageApi, contextHolder] = message.useMessage();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -26,11 +27,26 @@ export default function CategoryPage() {
       shareURL: crypto.randomUUID().replace(/-/g, ''),
       isPublic: true,
       category: selectedCategory,
-      memberId: '1',
+      memberId: user?.memberId,
     });
     setIsEdit(true);
     navigate(`/wall/new`, { state: { isNew: true } });
   };
+
+  const MAPPED_CATEGORY = useMemo(
+    () =>
+      CATEGORIES.map((category, index) => (
+        <CategoryCard
+          key={index}
+          category={category.value}
+          label={category.kor}
+          imageSrc={category.src}
+          onSelectCategory={handleSelectCategory}
+          isSelected={category.value === selectedCategory}
+        />
+      )),
+    [selectedCategory],
+  );
 
   return (
     <div className="h-[calc(100vh-70px)] items-center flex flex-col justify-center text-lightBlack">
@@ -46,20 +62,15 @@ export default function CategoryPage() {
         </div>
 
         <ul className="sm:flex sm:items-center sm:gap-[20px] mt-[20px] sm:mt-[80px] flex-wrap grid grid-cols-2 gap-[8px] items-center">
-          {CATEGORIES.map((category, index) => (
-            <CategoryCard
-              key={index}
-              category={category.value}
-              label={category.kor}
-              imageSrc={category.src}
-              onSelectCategory={handleSelectCategory}
-              isSelected={category.value === selectedCategory}
-            />
-          ))}
+          {spaceType === 'organization' ? (
+            <>{MAPPED_CATEGORY.slice(3)}</>
+          ) : (
+            <>{MAPPED_CATEGORY}</>
+          )}
         </ul>
 
         <Button
-          className="dm-24 text-gray88 mt-[100px] rounded-full h-[65px] w-[158px] self-end hidden sm:block"
+          className="dm-24 text-gray88 mt-[100px] rounded-full h-[65px] w-[158px] self-end"
           onClick={handleCreateWall}
         >
           작성하기

@@ -22,8 +22,10 @@ import Customization from '@/components/wall/customization/Customization';
 export default function WallPage() {
   const { wallId } = useParams();
 
-  const { state: spaceId } = useLocation();
-  const isNew = false;
+  const { state } = useLocation();
+  const isNew = state?.isNew ?? false;
+
+  const spaceId = localStorage.getItem('spaceId') as string;
 
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < 640;

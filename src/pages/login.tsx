@@ -1,5 +1,6 @@
 import { useUserStore } from '@/store';
 import { Button, Form, Input } from 'antd';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -7,19 +8,13 @@ export default function Login() {
   const navigate = useNavigate();
   const onFinish = async (values: { email: string; password: string }) => {
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/members/login`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(values),
-        },
+        values,
       );
-      const { data } = await response.json();
-      localStorage.setItem('user', JSON.stringify(data));
-      setUser(data);
+
+      localStorage.setItem('user', JSON.stringify(response.data.data));
+      setUser(response.data.data);
       navigate('/');
     } catch (error) {
       console.error(error);

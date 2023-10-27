@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
 import { Button, Form, Input } from 'antd';
-import { customAxios } from '@/api/customAxios';
+import { useNavigate } from 'react-router-dom';
+import useCustomAxios from '@/hooks/useCustomAxios';
 
 type AddSpaceModalProps = {
   setIsAddSpaceModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,16 +16,20 @@ export default function AddSpaceModal({
   setIsAddSpaceModalOpen,
   isAddSpaceModalOpen,
 }: AddSpaceModalProps) {
+  const customAxios = useCustomAxios();
+  const navigate = useNavigate();
   const onFinish = async (values: FieldType) => {
     try {
-      const response = await customAxios.post('/space', {
+      const response = await customAxios.post('space', {
         spaceTitle: values.spaceTitle,
         representativeName: '',
         spaceType: 'organization',
       });
-      console.log(response);
+
       if (response.status === 200) {
+        console.log(response);
         setIsAddSpaceModalOpen(false);
+        navigate('/');
       }
     } catch (error) {
       console.log(error);

@@ -8,39 +8,44 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import TempSaveModal from './TempSaveModal';
 import Icon from '../common/Icon';
-import { customAxios } from '@/api/customAxios';
 import type { SpaceInfo } from '@/types/space';
 import ContactTable, { DataType } from './ContactTable';
+import useCustomAxios from '@/hooks/useCustomAxios';
 
 export default function SpaceContact() {
-  // const hasSpace = memberInfo && memberInfo?.spaceWall.personal.length > 0;
-  const { state: spaceType } = useLocation();
+  const customAxios = useCustomAxios();
+  const {
+    state: { spaceType, spaceTitle },
+  } = useLocation();
   const navigate = useNavigate();
   const { spaceId } = useParams();
+  useEffect(() => {
+    localStorage.setItem('spaceId', spaceId as string);
+  }, [spaceId]);
+
   const [spaceInfo, setSpaceInfo] = useState<SpaceInfo>();
   const [isTempModalOpen, setIsTempModalOpen] = useState(false);
-  console.log(spaceInfo);
+  const [tempSpaceWallId, setTempSpaceWallId] = useState();
 
   const handleNextStep = async () => {
     // TODO
     if (spaceInfo?.hasWall) {
-      navigate(`/wall/${spaceInfo.spaceWallId}`, { state: spaceId });
+      navigate(`/wall/${spaceInfo.spaceWallId}`, {
+        state: { spaceId, isNew: false },
+      });
       return;
     }
-    // try {
-    //   const response = await fetch(
-    //     `${import.meta.env.VITE_SERVER_BASE_URL}/wall-temporary/storage/${
-    //       memberInfo?.member.memberId as number
-    //     }/${memberInfo?.spaceWall.personal[0].spaceId as number}`,
-    //   );
-    //   if (response.ok) {
-    //     navigate(`/category`);
-    //     return;
-    //   }
-    //   setIsTempModalOpen(true);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await customAxios(`wall-temporary/check/${spaceId}`);
+      if (!response.data.data.hasWallTemporary) {
+        navigate(`/category`, { state: { spaceType, spaceId } });
+        return;
+      }
+      setIsTempModalOpen(true);
+      setTempSpaceWallId(response.data.data.spaceWallId);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // useEffect(() => {
@@ -71,7 +76,7 @@ export default function SpaceContact() {
       }
     };
     getSpaceInfo();
-  }, [spaceId, spaceType]);
+  }, [spaceId, spaceType, localStorage.getItem('user')]);
 
   const data: DataType[] = useMemo(
     () =>
@@ -90,12 +95,13 @@ export default function SpaceContact() {
   }
   return (
     <div className="bg-sky min-h-screen pl-[24px]">
-      {/* <TempSaveModal
-        spaceWallId={spaceInfo?.spaceWallId}
+      <TempSaveModal
+        tempSpaceWallId={tempSpaceWallId}
+        spaceId={spaceId}
+        spaceType={spaceType}
         isTempModalOpen={isTempModalOpen}
         setIsTempModalOpen={setIsTempModalOpen}
-        // memberInfo={memberInfo}
-      /> */}
+      />
       <div className="bg-white px-[24px] py-[22px] rounded-tl-[24px] rounded-bl-[24px] min-h-[calc(100vh-99px)]">
         <div className="flex items-center justify-between border-lightBlack border-solid border-b-[1px] pb-[15px] mb-[15px]">
           <div
@@ -103,7 +109,9 @@ export default function SpaceContact() {
             onClick={handleNextStep}
           >
             <p className="dm-16">
-              {spaceInfo?.hasWall ? '공유페이지 이동' : '공유페이지 생성'}
+              {spaceInfo?.hasWall
+                ? `${spaceTitle} 공유페이지 이동`
+                : `${spaceTitle} 공유페이지 생성`}
             </p>
             <Icon src={circleArrowRightIcon} />
           </div>

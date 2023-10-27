@@ -1,6 +1,6 @@
 export interface SpacesInfo {
   member: Member;
-  spaceWall: SpaceWall;
+  space: SpaceWall;
 }
 
 export interface Member {

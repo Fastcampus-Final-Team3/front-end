@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import WallHeaderEditButtons from './WallHeaderSavigButtons';
+import WallHeaderSavingButtons from './WallHeaderSavingButtons';
 
 type MobileFixedFooterProps = {
   tourMobilePreviewRef?: React.MutableRefObject<null>;
@@ -15,7 +15,7 @@ export default function MobileFixedFooter({
       <Button danger onClick={() => setIsConfirmCancelModalOpen(true)}>
         취소
       </Button>
-      <WallHeaderEditButtons footer tourPreviewRef={tourMobilePreviewRef} />
+      <WallHeaderSavingButtons footer tourPreviewRef={tourMobilePreviewRef} />
     </footer>
   );
 }

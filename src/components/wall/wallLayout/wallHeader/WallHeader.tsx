@@ -2,13 +2,16 @@ import { useWallStore } from '@/store';
 import WallHeaderUser from './WallHeaderUser';
 import closeIcon from '@/assets/icons/close.svg';
 import WallHeaderInput from './WallHeaderInput';
-import WallHeaderEditButtons from './WallHeaderSavigButtons';
+import WallHeaderSavingButtons from './WallHeaderSavingButtons';
 import { useState } from 'react';
 import MobileFixedFooter from './MobileFixedFooter';
 import mobileDropdown from '@/assets/icons/mobile-dropdown.svg';
 import ConfirmCancelModal from './ConfirmCancelModal';
 import Icon from '@/components/common/Icon';
 import WallHeaderActions from './WallHeaderAction';
+import { Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { AiOutlineHome } from 'react-icons/ai';
 
 type WallHeaderProps = {
   tourPreviewRef: React.MutableRefObject<null>;
@@ -21,14 +24,9 @@ export default function WallHeader({
   tourMobilePreviewRef,
   isNew,
 }: WallHeaderProps) {
-  const { isEdit, setIsEdit, isPreview, getWall } = useWallStore();
+  const { isEdit, isPreview } = useWallStore();
 
   const [dropdownOpen, setdropDownOpen] = useState(false);
-
-  const handleCancelSave = () => {
-    getWall();
-    setIsEdit(false);
-  };
 
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] =
     useState(false);
@@ -40,17 +38,18 @@ export default function WallHeader({
       ${dropdownOpen ? 'h-[87px]' : 'h-[48px]'}
       `}
     >
+      <Link
+        to="/"
+        className="sm:absolute sm:top-[21px] sm:left-[30px] block top-[11px] left-130px]"
+      >
+        <Button icon={<AiOutlineHome size={20} />}></Button>
+      </Link>
       <div className="w-full max-w-[866px] mx-[24px] sm:mx-auto">
         {isPreview ? (
           <div className="flex justify-between gap-10 items-center">
             <WallHeaderUser />
             <WallHeaderInput />
-            <WallHeaderEditButtons isNew={isNew} />
-            <Icon
-              src={closeIcon}
-              className="absolute top-[21px] right-[30px] hover hidden sm:block"
-              onClick={handleCancelSave}
-            />
+            <WallHeaderSavingButtons isNew={isNew} />
             <MobileFixedFooter
               setIsConfirmCancelModalOpen={setIsConfirmCancelModalOpen}
             />
@@ -68,7 +67,7 @@ export default function WallHeader({
               <div className="flex flex-col gap-2 sm:gap-10 sm:flex-row sm:justify-between sm:items-center relative sm:static">
                 <WallHeaderUser />
                 <WallHeaderInput dropdownOpen={dropdownOpen} />
-                <WallHeaderEditButtons
+                <WallHeaderSavingButtons
                   tourPreviewRef={tourPreviewRef}
                   isNew={isNew}
                 />

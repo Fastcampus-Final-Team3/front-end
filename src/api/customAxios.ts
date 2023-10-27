@@ -6,11 +6,13 @@ export const customAxios = axios.create({
 });
 
 const user = JSON.parse(localStorage.getItem('user') as string);
-// Add an interceptor to the Axios instance
+
 customAxios.interceptors.request.use(
   (config) => {
-    const accessToken = user.accessToken; // Replace with your actual access token
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
+    const accessToken = user.accessToken;
+    if (accessToken) {
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
+    }
 
     return config;
   },
