@@ -45,7 +45,7 @@ export default function WallHeaderSavingButtons({
         data: {
           ...wall,
           memberId: user?.memberId,
-          spaceId: localStorage.getItem('spaceId'),
+          spaceId: wall.spaceId,
         },
       });
       message.success('임시저장이 되었습니다.');

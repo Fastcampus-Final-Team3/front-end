@@ -2,9 +2,9 @@ import ReactDOM from 'react-dom/client';
 import '@/index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import App from './App';
 import { ConfigProvider } from 'antd';
 import koKR from 'antd/es/locale/ko_KR';
+import App from './App';
 
 const queryClient = new QueryClient();
 

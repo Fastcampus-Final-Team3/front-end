@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
 import Wall from './pages/Wall';
 import Login from './pages/login';
 import ProtectedRoute from './pages/ProtectedRoute';
 import Space from './pages/Space';
 import Category from './pages/Category';
+import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -38,6 +38,7 @@ export default function App() {
         }
       />
       <Route path="/notFound" element={<NotFound />} />
+
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

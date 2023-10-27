@@ -6,10 +6,25 @@ import { Button, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../common/Icon';
 import { useUserStore } from '@/store';
+import useCustomAxios from '@/hooks/useCustomAxios';
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const customAxios = useCustomAxios();
   const { setUser, user } = useUserStore();
+  const handleLogout = async () => {
+    setUser(null);
+    localStorage.removeItem('user');
+    try {
+      await customAxios.delete('/members/logout', {
+        data: {
+          refreshToken: user?.refreshToken,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <header className="bg-sky">
       <div className="flex items-center h-[48px] sm:h-[70px] px-[24px] sm:px-[30px] justify-between max-w-[1920px] mx-auto">
@@ -37,14 +52,7 @@ export default function Navbar() {
           />
           <div className="flex items-center gap-2">
             <div>{user?.nickname}님</div>
-            {/* TODO 로그아웃 api */}
-            <Button
-              onClick={() => {
-                setUser(null);
-                localStorage.removeItem('user');
-              }}
-              danger
-            >
+            <Button onClick={handleLogout} danger>
               로그아웃
             </Button>
           </div>
