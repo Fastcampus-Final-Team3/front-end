@@ -22,7 +22,6 @@ export default function WallHeaderActions() {
     () => wall.memberId === user?.memberId,
     [user?.memberId, wall.memberId],
   );
-  const isLoggedIn = useMemo(() => !!localStorage.getItem('user'), []);
 
   return (
     <div className="flex gap-[8px] items-center">
