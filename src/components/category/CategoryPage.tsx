@@ -18,19 +18,20 @@ export default function CategoryPage({ spaceType }: { spaceType: string }) {
   };
 
   const handleCreateWall = async () => {
+    const shareURL = crypto.randomUUID().replace(/-/g, '');
     if (!selectedCategory) {
       messageApi.error('카테고리를 선택해주세요.');
       return;
     }
     setWall({
       ...DEFAULT_WALL[selectedCategory],
-      shareURL: crypto.randomUUID().replace(/-/g, ''),
-      isPublic: true,
+      isPublic: false,
+      shareURL,
       category: selectedCategory,
       memberId: user?.memberId,
     });
     setIsEdit(true);
-    navigate(`/wall/new`, { state: { isNew: true } });
+    navigate(`/wall/${shareURL}`, { state: { isNew: true } });
   };
 
   const MAPPED_CATEGORY = useMemo(

@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function useCustomAxios() {
   const { user } = useUserStore();
   const customAxios = axios.create({
-    baseURL: import.meta.env.VITE_SERVER_BASE_URL, // Your API base URL
+    baseURL: import.meta.env.VITE_SERVER_BASE_URL,
   });
 
   customAxios.interceptors.request.use(

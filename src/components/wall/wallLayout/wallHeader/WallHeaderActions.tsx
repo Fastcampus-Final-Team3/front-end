@@ -3,7 +3,6 @@ import { Button, Popover } from 'antd';
 import moreVerticalIcon from '@/assets/icons/more-vertical.svg';
 import { useMemo, useState } from 'react';
 import MoreVerticalPopover from './popover/MoreVerticalPopover';
-
 import WallHeaderPopoverTriggers from './WallHeaderPopoverTriggers';
 import Icon from '@/components/common/Icon';
 
@@ -23,6 +22,7 @@ export default function WallHeaderActions() {
     () => wall.memberId === user?.memberId,
     [user?.memberId, wall.memberId],
   );
+  const isLoggedIn = useMemo(() => !!localStorage.getItem('user'), []);
 
   return (
     <div className="flex gap-[8px] items-center">
