@@ -3,7 +3,7 @@ import WallHeaderUser from './WallHeaderUser';
 import closeIcon from '@/assets/icons/close.svg';
 import WallHeaderInput from './WallHeaderInput';
 import WallHeaderSavingButtons from './WallHeaderSavingButtons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import MobileFixedFooter from './MobileFixedFooter';
 import mobileDropdown from '@/assets/icons/mobile-dropdown.svg';
 import ConfirmCancelModal from './ConfirmCancelModal';
@@ -30,6 +30,8 @@ export default function WallHeader({
 
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] =
     useState(false);
+
+  const isLoggedIn = useMemo(() => !!localStorage.getItem('user'), []);
 
   return (
     <header
@@ -62,7 +64,9 @@ export default function WallHeader({
                 <WallHeaderActions />
                 <Link
                   to="/login"
-                  className="sm:absolute sm:top-[21px] sm:right-[30px] block top-[11px]"
+                  className={`sm:absolute sm:top-[21px] sm:right-[30px] block top-[11px]
+                  ${isLoggedIn && 'hidden'}
+                  `}
                 >
                   <Button icon={<CiLogin size={20} />}></Button>
                 </Link>
