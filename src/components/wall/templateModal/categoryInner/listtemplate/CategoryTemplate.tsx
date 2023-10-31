@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useMutation } from 'react-query';
 import { ListTemplete } from '../..';
+import useCustomAxios from '@/hooks/useCustomAxios';
 
 export interface Category {
   category: string;
@@ -16,46 +15,32 @@ const BookCategory: Category[] = [
   { category: 'CAREER', text: '취업/이직' },
 ];
 
-const fetchTemplateData = async (category: string) => {
-  const response = await axios.get(
-    `${
-      import.meta.env.VITE_SERVER_BASE_URL
-    }/wall/templates/lists?category=${category}`,
-  );
-  return response.data.data.list;
-};
-
 export default function CategoryTemplate() {
   const [categoryList, setCategoryList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('PERSONAL');
+  const customAxios = useCustomAxios();
 
-  const { mutate } = useMutation(fetchTemplateData, {
-    onMutate: () => {
-      setIsLoading(true);
-      setIsError(false);
-    },
-    onError: (error) => {
-      setIsError(true);
-      console.error('API 호출 에러:', error);
-      setIsLoading(false);
-    },
-    onSuccess: (data) => {
-      setCategoryList(data);
-      setIsLoading(false);
-    },
-  });
+  const fetchTemplateData = async (category: string) => {
+    try {
+      const response = await customAxios.get(
+        `/wall/templates/lists?category=${category}`,
+      );
+      setCategoryList(response.data.data.list);
+      //return response.data.data.list;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    mutate('PERSONAL');
-  }, [mutate]);
+    fetchTemplateData('PERSONAL');
+  }, []);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
     setCategoryList([]);
     // 데이터를 다시 가져옵니다.
-    mutate(category);
+    fetchTemplateData(category);
   };
 
   return (
@@ -74,13 +59,7 @@ export default function CategoryTemplate() {
         </ul>
       </Categorybox>
       <TemplateList>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : isError ? (
-          <p>Error fetching data</p>
-        ) : (
-          <ListTemplete list={categoryList} category={selectedCategory} />
-        )}
+        <ListTemplete list={categoryList} category={selectedCategory} />
       </TemplateList>
     </CategoryLayout>
   );
