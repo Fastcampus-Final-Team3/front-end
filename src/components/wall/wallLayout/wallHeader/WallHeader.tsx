@@ -3,15 +3,15 @@ import WallHeaderUser from './WallHeaderUser';
 import closeIcon from '@/assets/icons/close.svg';
 import WallHeaderInput from './WallHeaderInput';
 import WallHeaderSavingButtons from './WallHeaderSavingButtons';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import MobileFixedFooter from './MobileFixedFooter';
 import mobileDropdown from '@/assets/icons/mobile-dropdown.svg';
 import ConfirmCancelModal from './ConfirmCancelModal';
 import Icon from '@/components/common/Icon';
-import WallHeaderActions from './WallHeaderAction';
+import WallHeaderActions from './WallHeaderActions';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { AiOutlineHome } from 'react-icons/ai';
+import { CiLogin, CiHome } from 'react-icons/ci';
 
 type WallHeaderProps = {
   tourPreviewRef: React.MutableRefObject<null>;
@@ -31,6 +31,8 @@ export default function WallHeader({
   const [isConfirmCancelModalOpen, setIsConfirmCancelModalOpen] =
     useState(false);
 
+  const isLoggedIn = useMemo(() => !!localStorage.getItem('user'), []);
+
   return (
     <header
       className={`
@@ -42,7 +44,7 @@ export default function WallHeader({
         to="/"
         className="sm:absolute sm:top-[21px] sm:left-[30px] block top-[11px] left-130px]"
       >
-        <Button icon={<AiOutlineHome size={20} />}></Button>
+        <Button icon={<CiHome size={20} />}></Button>
       </Link>
       <div className="w-full max-w-[866px] mx-[24px] sm:mx-auto">
         {isPreview ? (
@@ -60,6 +62,14 @@ export default function WallHeader({
               <div className="flex items-center justify-between">
                 <WallHeaderUser />
                 <WallHeaderActions />
+                <Link
+                  to="/login"
+                  className={`sm:absolute sm:top-[21px] sm:right-[30px] block top-[11px]
+                  ${isLoggedIn && 'hidden'}
+                  `}
+                >
+                  <Button icon={<CiLogin size={20} />}></Button>
+                </Link>
               </div>
             )}
 

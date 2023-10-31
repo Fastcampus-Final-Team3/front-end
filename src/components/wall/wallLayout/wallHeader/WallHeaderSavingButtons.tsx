@@ -51,7 +51,6 @@ export default function WallHeaderSavingButtons({
       message.success('임시저장이 되었습니다.');
     } catch (error) {
       console.log(error);
-      messageApi.error('임시저장에 실패했습니다.');
     } finally {
       navigate('/');
       setTempSaving(false);
@@ -107,7 +106,9 @@ export default function WallHeaderSavingButtons({
         </Button>
         {!isPreview && (
           <Button
-            className="dm-14 text-blue border-blue"
+            className={`dm-14 text-blue border-blue
+            ${isNew && 'hidden'}
+            `}
             onClick={handleTempSave}
             loading={tempSaving}
           >

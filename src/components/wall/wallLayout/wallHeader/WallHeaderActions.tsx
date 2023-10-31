@@ -3,7 +3,6 @@ import { Button, Popover } from 'antd';
 import moreVerticalIcon from '@/assets/icons/more-vertical.svg';
 import { useMemo, useState } from 'react';
 import MoreVerticalPopover from './popover/MoreVerticalPopover';
-
 import WallHeaderPopoverTriggers from './WallHeaderPopoverTriggers';
 import Icon from '@/components/common/Icon';
 
